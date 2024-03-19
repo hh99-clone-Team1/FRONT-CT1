@@ -13,6 +13,10 @@ const palette = {
     '#e1e1e1', // 검색바 호버색, 사진 업로드 박스 색
     '#dadada', // 사진 업로드 박스 보더색
   ],
+  black: [
+    '#111', //인풋 글씨색
+    '#211922', //인풋 라벨 글씨색
+  ],
 };
 
 export default palette;
