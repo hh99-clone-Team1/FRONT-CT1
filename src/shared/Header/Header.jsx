@@ -1,24 +1,31 @@
-import React from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import IconBox from '../../components/IconBox';
+import palette from '../../styles/palette';
+import { ChatIcon, DropdownIcon, LogoIcon, NoticeIcon } from '../../img/HeaderIcons';
 
 function Header() {
-  const test = 'test'; // Todo: path에 따라 버튼 스타일 변경
+  const test = 'test'; // Todo: path에 따라 버튼 background 변경
   return (
     <HeaderLayout>
-      <IconBox>1</IconBox>
-      <div style={{ width: '60px' }}>
-        <NaviButton className={test !== 'test' && 'header__navi-button--selected'}>홈</NaviButton>
-      </div>
-      <div style={{ width: '72px' }}>
-        <NaviButton className={test === 'test' && 'header__navi-button--selected'}>만들기</NaviButton>
-      </div>
+      <IconBox>
+        <LogoIcon color={palette.red[3]} />
+      </IconBox>
+      <NaviButton className={test !== 'test' && 'header__navi-button--selected'}>홈</NaviButton>
+      <NaviButton className={test === 'test' && 'header__navi-button--selected'}>만들기</NaviButton>
       <Input />
-      <IconBox>2</IconBox>
-      <IconBox>3</IconBox>
-      <IconBox>4</IconBox>
-      <DropDownIcon>.</DropDownIcon>
+      <IconBox>
+        <NoticeIcon color={palette.gray[3]} />
+      </IconBox>
+      <IconBox>
+        <ChatIcon color={palette.gray[3]} />
+      </IconBox>
+      <IconBox>
+        <Profile>s</Profile>
+      </IconBox>
+      <IconStyles>
+        <DropdownIcon color={palette.gray[3]} />
+      </IconStyles>
     </HeaderLayout>
   );
 }
@@ -34,15 +41,14 @@ const HeaderLayout = styled.div`
 
 const NaviButton = styled(Button)`
   min-width: 60px;
-  width: 100%;
   background: #fff;
   color: #111;
   font-size: 16px;
-  font-weight: 600;
+  padding: 10px 16px;
 
   &.header__navi-button--selected {
     color: #fff;
-    background: #111;
+    background: ${palette.black[0]};
   }
 `;
 
@@ -53,9 +59,23 @@ const Input = styled.input`
   padding: 0 8px;
 `;
 
-const DropDownIcon = styled.div`
+const Profile = styled.div`
   width: 24px;
   height: 24px;
-  background-color: red;
   border-radius: 25px;
+  background: skyblue;
+`;
+
+const IconStyles = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background: ${palette.gray[2]};
+  }
 `;
