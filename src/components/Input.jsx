@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import palette from '../styles/palette';
 
@@ -10,14 +9,7 @@ function Input({ id, placeholder, type, value, label, onChange, ...styles }) {
           <p>{label}</p>
         </label>
       )}
-      <input
-        placeholder={placeholder}
-        type={type}
-        value={value}
-        id={id}
-        onChange={onChange}
-        {...styles}
-      />
+      <input placeholder={placeholder} type={type} value={value} id={id} onChange={onChange} {...styles} />
     </InputBox>
   );
 }
