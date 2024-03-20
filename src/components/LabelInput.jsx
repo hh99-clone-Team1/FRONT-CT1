@@ -11,7 +11,6 @@ function LabelInput({ id, placeholder, type, value, label, onChange }) {
     </LabelInputLayout>
   );
 }
-export default LabelInput;
 
 const LabelInputLayout = styled.div`
   display: flex;
@@ -26,3 +25,5 @@ const LabelInputLayout = styled.div`
     cursor: pointer;
   }
 `;
+
+export default LabelInput;
