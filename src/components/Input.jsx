@@ -2,15 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '../styles/palette';
 
-const Input = ({
-  id,
-  placeholder,
-  type,
-  value,
-  label,
-  onChange,
-  ...styles
-}) => {
+function Input({ id, placeholder, type, value, label, onChange, ...styles }) {
   return (
     <InputBox>
       {label && (
@@ -28,7 +20,7 @@ const Input = ({
       />
     </InputBox>
   );
-};
+}
 export default Input;
 
 const InputBox = styled.div`
