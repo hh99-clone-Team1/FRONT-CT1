@@ -19,6 +19,7 @@
       "error",
       {
         "endOfLine": "auto",
+        "printWidth": 120,
       },
     ],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
