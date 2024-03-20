@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import IconBox from '../../components/IconBox';
 import palette from '../../styles/palette';
 import { ChatIcon, DropdownIcon, LogoIcon, NoticeIcon } from '../../img/HeaderIcons';
+import SearchInput from './SearchInput';
 
 function Header() {
   const test = 'test'; // Todo: path에 따라 버튼 background 변경
@@ -13,7 +14,7 @@ function Header() {
       </IconBox>
       <NaviButton className={test !== 'test' && 'header__navi-button--selected'}>홈</NaviButton>
       <NaviButton className={test === 'test' && 'header__navi-button--selected'}>만들기</NaviButton>
-      <Input />
+      <SearchInput />
       <IconBox>
         <NoticeIcon color={palette.gray[3]} />
       </IconBox>
@@ -50,13 +51,6 @@ const NaviButton = styled(Button)`
     color: #fff;
     background: ${palette.black[0]};
   }
-`;
-
-const Input = styled.input`
-  flex: 1 1 auto;
-  box-sizing: border-box;
-  min-width: 407px;
-  padding: 0 8px;
 `;
 
 const Profile = styled.div`
