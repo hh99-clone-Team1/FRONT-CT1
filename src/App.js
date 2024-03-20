@@ -1,10 +1,13 @@
 import './App.css';
-import Header from './components/Header';
+import Header from './shared/Header/Header';
+import HeaderBox from './shared/Header/HeaderBox';
 
 function App() {
   return (
     <div className="App" style={{ height: '1000px' }}>
-      <Header />
+      <HeaderBox>
+        <Header />
+      </HeaderBox>
     </div>
   );
 }

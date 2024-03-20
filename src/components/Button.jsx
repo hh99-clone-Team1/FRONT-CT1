@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
 
-export const Button = styled.button`
+const Button = styled.button`
   height: 52px;
   border-radius: 35px;
   border: none;
