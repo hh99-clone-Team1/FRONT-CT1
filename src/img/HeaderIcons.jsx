@@ -46,10 +46,10 @@ function DropdownIcon({ color }) {
   );
 }
 
-function SearchIcon({ color }) {
+function SearchIcon({ color, className }) {
   return (
     <svg
-      className="BNH gUZ U9O kVc"
+      className={className}
       height="16"
       width="16"
       viewBox="0 0 24 24"
@@ -62,4 +62,12 @@ function SearchIcon({ color }) {
   );
 }
 
-export { LogoIcon, NoticeIcon, ChatIcon, DropdownIcon, SearchIcon };
+function SearchCloseIcon() {
+  return (
+    <svg height="16" width="16" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img">
+      <path d="m15.18 12 7.16-7.16a2.25 2.25 0 1 0-3.18-3.18L12 8.82 4.84 1.66a2.25 2.25 0 1 0-3.18 3.18L8.82 12l-7.16 7.16a2.25 2.25 0 1 0 3.18 3.18L12 15.18l7.16 7.16a2.24 2.24 0 0 0 3.18 0c.88-.88.88-2.3 0-3.18z" />
+    </svg>
+  );
+}
+
+export { LogoIcon, NoticeIcon, ChatIcon, DropdownIcon, SearchIcon, SearchCloseIcon };
