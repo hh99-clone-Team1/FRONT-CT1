@@ -22,6 +22,15 @@ const Button = styled.button`
       }
     `}
   ${(props) =>
+    props.LightRed &&
+    css`
+      background-color: ${palette.red[3]};
+      color: white;
+      &:hover {
+        background-color: ${palette.red[0]};
+      }
+    `}
+  ${(props) =>
     props.Gray &&
     css`
       background-color: ${palette.gray[0]};
@@ -29,13 +38,19 @@ const Button = styled.button`
         background-color: ${palette.gray[1]};
       }
     `}
-    ${(props) =>
+  ${(props) =>
     props.Black &&
     css`
       background-color: white;
       &:hover {
-        background-color: black};
+        background-color: black;
       }
+    `}
+  ${(props) =>
+    props.Blue &&
+    css`
+      background-color: ${palette.blue[0]};
+      color: white;
     `}
 `;
 
