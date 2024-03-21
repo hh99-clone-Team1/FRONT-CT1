@@ -146,7 +146,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
           <>
             <InputName>생년월일</InputName>
             <LabelInput type={'date'} value={birthday} onChange={handleBirthdayChange} />
-            <Button LightRed onClick={closeModal}>
+            <Button LightRed type="submit">
               계속하기
             </Button>
           </>

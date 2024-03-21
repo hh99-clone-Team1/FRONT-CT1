@@ -35,7 +35,7 @@ const HeaderChoiceBox = styled.span`
   }
 `;
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.form`
   position: fixed;
   top: 0;
   left: 0;
@@ -47,7 +47,7 @@ const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
 `;
 
-const ModalContent = styled.form`
+const ModalContent = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
