@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Intro from '../pages/intro';
 import Main from '../pages/main';
-import Detail from '../pages/detail';
 import HeaderBox from './Header/HeaderBox';
 import Header from './Header/Header';
+import Detail from '../pages/Detail';
 
 function Router() {
   return (
