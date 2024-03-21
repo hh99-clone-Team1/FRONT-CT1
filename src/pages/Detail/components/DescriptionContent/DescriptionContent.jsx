@@ -4,14 +4,14 @@ import palette from '../../../../styles/palette';
 import DescriptionContentMain from '../DescriptionContentMain';
 import DetailAddComment from '../DetailAddComment';
 
-function DescriptionContent() {
+function DescriptionContent({ post }) {
   return (
     <DescriptionContentLayout>
       <ContentBox>
         <ContentHeader>
           <HeaderButton>저장</HeaderButton>
         </ContentHeader>
-        <DescriptionContentMain />
+        <DescriptionContentMain {...post} />
       </ContentBox>
       <DetailAddComment />
     </DescriptionContentLayout>

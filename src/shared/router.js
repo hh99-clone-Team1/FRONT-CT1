@@ -22,7 +22,7 @@ function Router() {
           }
         />
         <Route
-          path="/detail"
+          path="/detail/:id"
           element={
             <>
               <HeaderBox>
