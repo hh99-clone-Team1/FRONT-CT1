@@ -12,10 +12,10 @@ function SearchInput() {
 
   return (
     <SearchInputLayout>
-      <InputBox isFocus={isFocus}>
+      <InputBox $isFocus={isFocus}>
         <SearchIcon color={palette.gray[3]} className="searchInput__search-icon" />
         <Input placeholder="검색" onFocus={handleFocusInput} onBlur={handleBlurInput} />
-        <IconBoxStyles isFocus={isFocus}>
+        <IconBoxStyles $isFocus={isFocus}>
           <SearchCloseIcon />
         </IconBoxStyles>
       </InputBox>
@@ -41,20 +41,20 @@ const InputBox = styled.div`
   padding-left: 16px;
   gap: 8px;
 
-  ${({ isFocus }) => isFocus && 'box-shadow: 0 0 0 4px rgba(0, 132, 255, 0.5)'};
+  ${({ $isFocus }) => $isFocus && 'box-shadow: 0 0 0 4px rgba(0, 132, 255, 0.5)'};
 
   &:hover {
     background: ${palette.gray[1]};
   }
 
   .searchInput__search-icon {
-    ${({ isFocus }) => isFocus && 'display: none'};
+    ${({ $isFocus }) => $isFocus && 'display: none'};
   }
 `;
 
 const IconBoxStyles = styled(IconBox)`
   background: transparent;
-  ${({ isFocus }) => !isFocus && 'display: none'};
+  ${({ $isFocus }) => !$isFocus && 'display: none'};
 
   &:hover {
     background: ${palette.gray[6]};
