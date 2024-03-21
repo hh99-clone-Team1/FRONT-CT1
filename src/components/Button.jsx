@@ -24,6 +24,9 @@ const Button = styled.button`
   ${(props) =>
     props.LightRed &&
     css`
+      height: 43px;
+      padding: 10px 15px;
+      margin-top: 10px;
       background-color: ${palette.red[3]};
       color: white;
       &:hover {
@@ -31,8 +34,21 @@ const Button = styled.button`
       }
     `}
   ${(props) =>
+    props.LightGray &&
+    css`
+      height: 43px;
+      margin-left: 10px;
+      padding: 10px 15px;
+      background-color: ${palette.gray[0]};
+      &:hover {
+        background-color: ${palette.gray[1]};
+      }
+    `}
+  ${(props) =>
     props.Gray &&
     css`
+      height: 43px;
+      padding: 10px 15px;
       background-color: ${palette.gray[0]};
       &:hover {
         background-color: ${palette.gray[1]};
