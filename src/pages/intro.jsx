@@ -120,25 +120,15 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   });
 
   // 폼 제출
-  const handleFormSubmit = async (e) => {
-    console.log('choi');
-    console.log(newUserInfo);
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    if (isLogin) {
-      // 로그인 처리
-    } else {
-      // 회원가입 처리
-      signupMutation.mutate(newUserInfo);
-    }
+    console.log('choi'); // 이 부분을 추가하여 폼이 제출될 때 'choi'를 출력합니다.
   };
 
   return (
     <ModalWrapper>
       <ModalContent onSubmit={handleFormSubmit}>
-        <ModalCloseButton type="button" onClick={closeModal}>
-          X
-        </ModalCloseButton>
+        <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
         <h2>Pinterest에 오신 것을 환영합니다</h2>
         {!isLogin && <IdeaComment>시도해 볼만한 새로운 아이디어 찾기</IdeaComment>}
         <InputName>이메일</InputName>
@@ -148,7 +138,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
         {isLogin ? (
           <>
             <StrongComment>비밀번호를 잊으셨나요?</StrongComment>
-            <Button LightRed type="submit" onClick={closeModal}>
+            <Button LightRed onClick={closeModal}>
               로그인
             </Button>
           </>
@@ -156,7 +146,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
           <>
             <InputName>생년월일</InputName>
             <LabelInput type={'date'} value={birthday} onChange={handleBirthdayChange} />
-            <Button LightRed type="submit" onClick={closeModal}>
+            <Button LightRed onClick={closeModal}>
               계속하기
             </Button>
           </>
@@ -165,7 +155,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
         {isLogin && (
           <>
             <OrComment>또는</OrComment>
-            <Button Blue type="button" onClick={handleFaceBook}>
+            <Button Blue onClick={handleFaceBook}>
               Facebook으로 계속하기
             </Button>
           </>
