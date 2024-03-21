@@ -35,7 +35,7 @@ function Imageboard({ images, mainboard }) {
           <ImageWrapper>
             <ImageContainer>
               <ElementWrapper>
-                <img src={optimizedUrl} alt="이미지" />
+                <img src={optimizedUrl} loading="lazy" alt="이미지" />
                 {mainboard && (
                   <>
                     <Button LightRed>저장</Button>
