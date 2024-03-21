@@ -1,11 +1,25 @@
 /* eslint-disable*/
 import { useState } from 'react';
-import styled from 'styled-components';
 import Button from '../components/Button';
 import LabelInput from '../components/LabelInput';
 import { useNavigate } from 'react-router-dom';
-import palette from '../styles/palette';
 import { useMutation } from '@tanstack/react-query';
+import { signupUser, loginUser } from '../axios/LoginSignupAxios';
+import {
+  IntroHeader,
+  HeaderLogoBox,
+  HearderSearchBox,
+  HeaderChoiceBox,
+  ModalWrapper,
+  ModalContent,
+  ModalCloseButton,
+  InputName,
+  IdeaComment,
+  StrongComment,
+  ServiceComment,
+  OrComment,
+  ChangeModalComment,
+} from './intro.module';
 
 function Intro() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,20 +50,20 @@ function Intro() {
         <HeaderChoiceBox>소개 </HeaderChoiceBox>
         <HeaderChoiceBox>비즈니스 </HeaderChoiceBox>
         <HeaderChoiceBox>언론 </HeaderChoiceBox>
-        <Button LightRed onClick={handleLogin}>
+        <Button LightRed type="button" onClick={handleLogin}>
           로그인
         </Button>
-        <Button LightGray onClick={handleSignup}>
+        <Button LightGray type="button" onClick={handleSignup}>
           가입하기
         </Button>
       </div>
 
-      {isModalOpen && <LoginSignupModal closeModal={closeModal} isLogin={isLogin} />}
+      {isModalOpen && <LoginSignupModal closeModal={closeModal} isLogin={isLogin} setIsLogin={setIsLogin} />}
     </IntroHeader>
   );
 }
 
-function LoginSignupModal({ closeModal, isLogin }) {
+function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -70,11 +84,6 @@ function LoginSignupModal({ closeModal, isLogin }) {
     setBirthday(birthday);
   };
 
-  const handleLoginToMain = () => {
-    closeModal();
-    navigate('/main');
-  };
-
   const handleFaceBook = () => {
     closeModal();
     window.open('https://www.facebook.com/', '_blank');
@@ -91,29 +100,76 @@ function LoginSignupModal({ closeModal, isLogin }) {
     birthday,
   };
 
-  const handleSubmit = (e) => {
+  // 회원가입 통신
+  const signupMutation = useMutation({
+    mutationFn: signupUser,
+    onSuccess: (data) => {
+      if (data.status === 200) {
+        alert('회원가입에 성공했습니다.');
+        setIsLogin(true);
+      }
+    },
+    onError: (error) => {
+      alert('회원가입 실패 : ', error);
+    },
+  });
+
+  // 로그인 통신
+  const loginMutation = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      const refreshToken = data.refreshToken;
+      const accessToken = data.refreshToken;
+
+      alert('로그인 성공!');
+      navigate('/main');
+    },
+    onError: (error) => {
+      alert('회원가입 실패 : ', error);
+    },
+  });
+
+  // 폼 제출
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(userInfo);
+    console.log(newUserInfo);
+
+    if (isLogin) {
+      // 로그인 처리
+      loginMutation.mutate(userInfo);
+    } else {
+      // 회원가입 처리
+      signupMutation.mutate(newUserInfo);
+    }
   };
+
   return (
     <ModalWrapper>
-      <ModalContent onSubmit={handleSubmit}>
+      <ModalContent onSubmit={handleFormSubmit}>
         <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
         <h2>Pinterest에 오신 것을 환영합니다</h2>
         {!isLogin && <IdeaComment>시도해 볼만한 새로운 아이디어 찾기</IdeaComment>}
         <InputName>이메일</InputName>
-        <LabelInput placeholder={'이메일'} onChange={handleEmailChange} />
+        <LabelInput type={'email'} placeholder={'이메일'} value={email} onChange={handleEmailChange} />
         <InputName>비밀번호</InputName>
-        <LabelInput type={'password'} placeholder={'비밀번호'} onChange={handlePasswordChange} />
+        <LabelInput type={'password'} placeholder={'비밀번호'} value={password} onChange={handlePasswordChange} />
         {isLogin ? (
-          <StrongComment>비밀번호를 잊으셨나요?</StrongComment>
+          <>
+            <StrongComment>비밀번호를 잊으셨나요?</StrongComment>
+            <Button LightRed type="submit">
+              로그인
+            </Button>
+          </>
         ) : (
           <>
             <InputName>생년월일</InputName>
-            <LabelInput type={'date'} onChange={handleBirthdayChange} />
+            <LabelInput type={'date'} value={birthday} onChange={handleBirthdayChange} />
+            <Button LightRed type="submit">
+              계속하기
+            </Button>
           </>
         )}
-        <Button LightRed>로그인</Button>
+
         {isLogin && (
           <>
             <OrComment>또는</OrComment>
@@ -139,112 +195,5 @@ function LoginSignupModal({ closeModal, isLogin }) {
     </ModalWrapper>
   );
 }
-
-const IntroHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  margin: 20px;
-`;
-
-const HeaderLogoBox = styled.span`
-  padding: 30px 10px 0px 20px;
-  color: red;
-  font-size: 20px;
-  font-weight: bold;
-`;
-const HearderSearchBox = styled.span`
-  margin-top: 10px;
-  padding: 9px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  &:hover {
-    background-color: ${palette.gray[0]};
-  }
-`;
-const HeaderChoiceBox = styled.span`
-  padding-right: 30px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  &:hover {
-    text-decoration-line: underline;
-  }
-`;
-
-const ModalWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
-const ModalContent = styled.form`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  width: 257px;
-  height: 450px;
-  padding: 86px;
-  background-color: white;
-  border-radius: 30px;
-  box-shadow: 0 0 5px;
-`;
-
-const ModalCloseButton = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 30px;
-  height: 20px;
-  color: black;
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-`;
-
-const InputName = styled.div`
-  text-align: left;
-  padding: 10px 0px 0px 10px;
-  font-size: 13px;
-`;
-
-const IdeaComment = styled.div`
-  font-size: 14px;
-`;
-
-const StrongComment = styled.div`
-  text-align: left;
-  padding: 5px 0px 10px 0px;
-  font-size: 12px;
-  font-weight: bold;
-`;
-
-const ServiceComment = styled.div`
-  padding: 15px;
-  font-size: 9.7px;
-`;
-
-const OrComment = styled.div`
-  padding: 10px;
-  font-size: 12px;
-  font-weight: bold;
-`;
-
-const ChangeModalComment = styled.div`
-  font-size: 10px;
-  font-weight: bold;
-`;
 
 export default Intro;
