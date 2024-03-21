@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import LabelInput from '../components/LabelInput';
 import { useNavigate } from 'react-router-dom';
+import palette from '../styles/palette';
+import { useMutation } from '@tanstack/react-query';
 
 function Intro() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,17 +29,17 @@ function Intro() {
   return (
     <IntroHeader>
       <div>
-        <span>Pinterest </span>
-        <span>탐색 </span>
+        <HeaderLogoBox>Pinterest </HeaderLogoBox>
+        <HearderSearchBox>탐색 </HearderSearchBox>
       </div>
       <div>
-        <span>소개 </span>
-        <span>비즈니스 </span>
-        <span>언론 </span>
+        <HeaderChoiceBox>소개 </HeaderChoiceBox>
+        <HeaderChoiceBox>비즈니스 </HeaderChoiceBox>
+        <HeaderChoiceBox>언론 </HeaderChoiceBox>
         <Button LightRed onClick={handleLogin}>
           로그인
         </Button>
-        <Button Gray onClick={handleSignup}>
+        <Button LightGray onClick={handleSignup}>
           가입하기
         </Button>
       </div>
@@ -77,10 +79,6 @@ function LoginSignupModal({ closeModal, isLogin }) {
     closeModal();
     window.open('https://www.facebook.com/', '_blank');
   };
-  // const handleGoogle = () => {
-  //   closeModal();
-  //   window.open('https://www.google.co.kr/', '_blank');
-  // };
 
   const userInfo = {
     email,
@@ -93,12 +91,16 @@ function LoginSignupModal({ closeModal, isLogin }) {
     birthday,
   };
 
+  const signupMutation = useMutation({
+    mutationFn: signupUser,
+  })
+
   return (
     <ModalWrapper>
       <ModalContent>
         <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
         <h2>Pinterest에 오신 것을 환영합니다</h2>
-        {!isLogin && <div>시도해 볼만한 새로운 아이디어 찾기</div>}
+        {!isLogin && <IdeaComment>시도해 볼만한 새로운 아이디어 찾기</IdeaComment>}
         <InputName>이메일</InputName>
         <LabelInput placeholder={'이메일'} onChange={handleEmailChange} />
         <InputName>비밀번호</InputName>
@@ -122,12 +124,13 @@ function LoginSignupModal({ closeModal, isLogin }) {
             </Button>
           </>
         )}
-        {/* <Button onClick={handleGoogle}>
-          Google 계정으로 계속하기
-        </Button> */}
         <ServiceComment>
-          계속 진행하면 Pinterest <strong>서비스 약관에</strong> 동의하고 <strong>개인정보 보호정책</strong>을 읽었음을
-          인정하는 것으로 간주됩니다. <strong>컬렉션 알림.</strong>
+          계속 진행하면 Pinterest <strong>서비스 약관에 </strong>동의하고
+          <strong>
+            <br />
+            개인정보 보호정책
+          </strong>
+          을 읽었음을 인정하는 것으로 간주 됩니다. <strong>컬렉션 알림.</strong>
         </ServiceComment>
         {isLogin ? (
           <ChangeModalComment>아직 Pinterest를 사용하고 있지 않으신가요? 가입하기</ChangeModalComment>
@@ -144,6 +147,33 @@ const IntroHeader = styled.div`
   justify-content: space-between;
   text-align: center;
   margin: 20px;
+`;
+
+const HeaderLogoBox = styled.span`
+  padding: 30px 10px 0px 20px;
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
+`;
+const HearderSearchBox = styled.span`
+  margin-top: 10px;
+  padding: 9px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    background-color: ${palette.gray[0]};
+  }
+`;
+const HeaderChoiceBox = styled.span`
+  padding-right: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    text-decoration-line: underline;
+  }
 `;
 
 const ModalWrapper = styled.div`
@@ -164,9 +194,9 @@ const ModalContent = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  width: 240px;
+  width: 257px;
   height: 450px;
-  padding: 90px;
+  padding: 86px;
   background-color: white;
   border-radius: 30px;
   box-shadow: 0 0 5px;
@@ -174,14 +204,15 @@ const ModalContent = styled.div`
 
 const ModalCloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   width: 30px;
-  height: 30px;
+  height: 20px;
   color: black;
   background-color: transparent;
   border: none;
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: bold;
   cursor: pointer;
 `;
 
@@ -191,26 +222,31 @@ const InputName = styled.div`
   font-size: 13px;
 `;
 
+const IdeaComment = styled.div`
+  font-size: 14px;
+`;
+
 const StrongComment = styled.div`
   text-align: left;
-  padding: 5px 0px 20px 0px;
+  padding: 5px 0px 10px 0px;
   font-size: 12px;
   font-weight: bold;
 `;
 
 const ServiceComment = styled.div`
   padding: 15px;
-  font-size: 10px;
+  font-size: 9.7px;
 `;
 
 const OrComment = styled.div`
   padding: 10px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
 `;
 
 const ChangeModalComment = styled.div`
-  font-size: 12px;
+  font-size: 10px;
+  font-weight: bold;
 `;
 
 export default Intro;
