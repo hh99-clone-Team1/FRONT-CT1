@@ -84,11 +84,6 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
     setBirthday(birthday);
   };
 
-  const handleLoginToMain = () => {
-    closeModal();
-    navigate('/main');
-  };
-
   const handleFaceBook = () => {
     closeModal();
     window.open('https://www.facebook.com/', '_blank');
@@ -115,14 +110,37 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
       }
     },
     onError: (error) => {
-      console.log('회원가입 실패 : ', error);
+      alert('회원가입 실패 : ', error);
+    },
+  });
+
+  // 로그인 통신
+  const loginMutation = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      const refreshToken = data.refreshToken;
+      const accessToken = data.refreshToken;
+
+      alert('로그인 성공!');
+      navigate('/main');
+    },
+    onError: (error) => {
+      alert('회원가입 실패 : ', error);
     },
   });
 
   // 폼 제출
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log('choi'); // 이 부분을 추가하여 폼이 제출될 때 'choi'를 출력합니다.
+    console.log(newUserInfo);
+
+    if (isLogin) {
+      // 로그인 처리
+      loginMutation.mutate(userInfo);
+    } else {
+      // 회원가입 처리
+      signupMutation.mutate(newUserInfo);
+    }
   };
 
   return (
@@ -138,7 +156,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
         {isLogin ? (
           <>
             <StrongComment>비밀번호를 잊으셨나요?</StrongComment>
-            <Button LightRed onClick={closeModal}>
+            <Button LightRed type="submit">
               로그인
             </Button>
           </>
