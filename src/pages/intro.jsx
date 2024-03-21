@@ -91,9 +91,13 @@ function LoginSignupModal({ closeModal, isLogin }) {
     birthday,
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(userInfo);
+  };
   return (
     <ModalWrapper>
-      <ModalContent>
+      <ModalContent onSubmit={handleSubmit}>
         <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
         <h2>Pinterest에 오신 것을 환영합니다</h2>
         {!isLogin && <IdeaComment>시도해 볼만한 새로운 아이디어 찾기</IdeaComment>}
@@ -109,9 +113,7 @@ function LoginSignupModal({ closeModal, isLogin }) {
             <LabelInput type={'date'} onChange={handleBirthdayChange} />
           </>
         )}
-        <Button LightRed onClick={handleLoginToMain}>
-          로그인
-        </Button>
+        <Button LightRed>로그인</Button>
         {isLogin && (
           <>
             <OrComment>또는</OrComment>
@@ -184,7 +186,7 @@ const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;

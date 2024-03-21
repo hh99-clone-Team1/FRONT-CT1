@@ -2,22 +2,18 @@ import styled from 'styled-components';
 import Button from '../../../../components/Button';
 import palette from '../../../../styles/palette';
 import DescriptionContentMain from '../DescriptionContentMain';
+import DetailAddComment from '../DetailAddComment';
 
-function DescriptionContent() {
+function DescriptionContent({ post }) {
   return (
     <DescriptionContentLayout>
       <ContentBox>
         <ContentHeader>
           <HeaderButton>저장</HeaderButton>
         </ContentHeader>
-        <DescriptionContentMain />
+        <DescriptionContentMain {...post} />
       </ContentBox>
-      <ContentFooterBox>
-        <ContentFooter>
-          <div>댓글, 좋아요</div>
-          <div>인풋</div>
-        </ContentFooter>
-      </ContentFooterBox>
+      <DetailAddComment />
     </DescriptionContentLayout>
   );
 }
@@ -52,21 +48,4 @@ const ContentHeader = styled.div`
 const HeaderButton = styled(Button)`
   background: ${palette.red[3]};
   color: #fff;
-`;
-
-const ContentFooterBox = styled.div`
-  overflow: hidden;
-  border-radius: 0 0 32px 0;
-  position: sticky;
-  bottom: 0;
-`;
-
-const ContentFooter = styled.div`
-  box-sizing: border-box;
-  padding: 8px 32px;
-  border-top: 1px solid ${palette.gray[1]};
-  display: flex;
-  flex-direction: column;
-
-  background: #fff;
 `;

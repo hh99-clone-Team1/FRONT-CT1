@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-function ImageContent() {
+function ImageContent({ url }) {
   return (
     <ImageContentLayout>
-      <img src="https://i.pinimg.com/564x/63/2e/6b/632e6b7d7e460e2b19f0a679dda0f500.jpg" alt="detail-visual-content" />
+      <img src={url} alt="detail-visual-content" />
     </ImageContentLayout>
   );
 }
