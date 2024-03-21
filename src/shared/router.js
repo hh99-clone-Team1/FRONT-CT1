@@ -3,6 +3,8 @@ import Layout from './Layout';
 import Intro from '../pages/intro';
 import Main from '../pages/main';
 import Detail from '../pages/detail';
+import HeaderBox from './Header/HeaderBox';
+import Header from './Header/Header';
 
 function Router() {
   const user = 'test';
@@ -10,14 +12,29 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        {user ? (
-          <Route path="/" element={<Layout />}>
-            <Route path="/" element={<Main />} />
-            <Route path="/detail" element={<Detail />} />
-          </Route>
-        ) : (
-          <Route path="/" element={<Intro />} />
-        )}
+        <Route path="/" element={<Intro />} />
+        <Route
+          path="/main"
+          element={
+            <>
+              <HeaderBox>
+                <Header />
+              </HeaderBox>
+              <Main />
+            </>
+          }
+        />
+        <Route
+          path="/detail"
+          element={
+            <>
+              <HeaderBox>
+                <Header />
+              </HeaderBox>
+              <Detail />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
