@@ -91,10 +91,6 @@ function LoginSignupModal({ closeModal, isLogin }) {
     birthday,
   };
 
-  const signupMutation = useMutation({
-    mutationFn: signupUser,
-  })
-
   return (
     <ModalWrapper>
       <ModalContent>
