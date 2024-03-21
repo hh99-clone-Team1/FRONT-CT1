@@ -57,6 +57,8 @@ const Profile = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 25px;
+  display: flex;
+  justify-content: center;
   background: skyblue;
 `;
 
