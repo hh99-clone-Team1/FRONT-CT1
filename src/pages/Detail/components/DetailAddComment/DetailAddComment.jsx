@@ -1,20 +1,33 @@
 /* eslint-disable react/style-prop-object */
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import palette from '../../../../styles/palette';
 import likeIcon from '../../../../img/likeIcon.svg';
 import likeSelectedIcon from '../../../../img/likeSelectedIcon.svg';
 import AddCommentIcon from '../../../../img/AddCommentIcon';
+import { addComment } from '../../../../axios/commentAxios';
 
 function DetailAddComment({ commentsCount }) {
   const isLike = '좋아요';
   const user = 'test';
+  const { id: postId } = useParams();
   const [comment, setComment] = useState('');
+
+  const { mutate: handleAddComment } = useMutation({
+    mutationFn: addComment,
+    onSuccess: () => {
+      // Todo: 댓글 쿼리 최신화
+      setComment('');
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(comment);
+    handleAddComment({ postId, comment });
   };
+
   return (
     <DetailAddCommentLayout>
       <CommentBox>
@@ -29,7 +42,7 @@ function DetailAddComment({ commentsCount }) {
             {user.split('')[0]}
           </Profile>
           <label htmlFor="comment-input">
-            <input id="comment-input" autoComplete="none" onChange={(e) => setComment(e.currentTarget.value)} />
+            <input id="comment-input" autoComplete="off" onChange={(e) => setComment(e.currentTarget.value)} />
             <ButtonBox type="submit" $active={comment}>
               <AddCommentIcon />
             </ButtonBox>
@@ -78,6 +91,7 @@ const CountBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 `;
 
@@ -97,6 +111,7 @@ const InputBox = styled.form`
     align-items: center;
     justify-content: space-between;
     padding: 0 6px 0 16px;
+    cursor: pointer;
   }
 
   input {
@@ -104,6 +119,11 @@ const InputBox = styled.form`
     border: none;
     font-size: 16px;
     outline: none;
+    cursor: pointer;
+
+    &:focus {
+      cursor: auto;
+    }
   }
 `;
 
