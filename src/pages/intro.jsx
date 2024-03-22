@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { signupUser, loginUser } from '../axios/LoginSignupAxios';
 import {
-  IntroHeader,
+  IntroHeaderLayout,
   HeaderLogoBox,
   HearderSearchBox,
   HeaderChoiceBox,
@@ -20,6 +20,7 @@ import {
   OrComment,
   ChangeModalComment,
 } from './intro.module';
+import { setLocalStorage } from '../utils/storageUtils';
 
 function Intro() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +42,7 @@ function Intro() {
   };
 
   return (
-    <IntroHeader>
+    <IntroHeaderLayout>
       <div>
         <HeaderLogoBox>Pinterest </HeaderLogoBox>
         <HearderSearchBox>탐색 </HearderSearchBox>
@@ -59,7 +60,7 @@ function Intro() {
       </div>
 
       {isModalOpen && <LoginSignupModal closeModal={closeModal} isLogin={isLogin} setIsLogin={setIsLogin} />}
-    </IntroHeader>
+    </IntroHeaderLayout>
   );
 }
 
@@ -84,8 +85,17 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
     setBirthday(birthday);
   };
 
+  const validateEmail = (email) => {
+    const eamilRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return eamilRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,15}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleFaceBook = () => {
-    closeModal();
     window.open('https://www.facebook.com/', '_blank');
   };
 
@@ -110,6 +120,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
       }
     },
     onError: (error) => {
+      console.log(data);
       alert('회원가입 실패 : ', error);
     },
   });
@@ -118,14 +129,23 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      const refreshToken = data.refreshToken;
-      const accessToken = data.refreshToken;
+      const refreshToken = data.headers.refreshToken;
+      const accessToken = data.data.accessToken;
+      console.log(data);
+      console.log(refreshToken);
 
-      alert('로그인 성공!');
-      navigate('/main');
+      if (data.status === 200) {
+        setLocalStorage(accessToken);
+        /*
+        setCookie('refreshToken', refreshToken);
+        */
+        localStorage.setItem('email', email);
+        alert(`${email}님 로그인 성공!`);
+        navigate('/main');
+      }
     },
     onError: (error) => {
-      alert('회원가입 실패 : ', error);
+      alert('로그인 실패 : ', error);
     },
   });
 
@@ -133,6 +153,14 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(newUserInfo);
+
+    if (email.trim() !== '' && !validateEmail(email)) {
+      alert('유효한 이메일 주소를 입력하세요.');
+    }
+
+    if (password.trimEnd() !== '' && !validatePassword(password)) {
+      alert('비밀번호는 영어 대소문자와 숫자를 사용하여 6~15자로 입력하세요.');
+    }
 
     if (isLogin) {
       // 로그인 처리

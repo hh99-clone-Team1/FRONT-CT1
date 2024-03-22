@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import palette from '../styles/palette';
 
-const IntroHeader = styled.div`
+const IntroHeaderLayout = styled.div`
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -109,7 +109,7 @@ const ChangeModalComment = styled.div`
 `;
 
 export {
-  IntroHeader,
+  IntroHeaderLayout,
   HeaderLogoBox,
   HearderSearchBox,
   HeaderChoiceBox,
