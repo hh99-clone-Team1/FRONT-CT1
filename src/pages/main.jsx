@@ -1,7 +1,14 @@
 import React from 'react';
 
 function Main() {
-  return <div>메인 페이지</div>;
+  return (
+    <>
+      <div>{localStorage.getItem('accessToken')}</div>
+      <div>{localStorage.getItem('accessToken')}</div>
+      <div>{localStorage.getItem('accessToken')}</div>
+      <div>{localStorage.getItem('email')}</div>
+    </>
+  );
 }
 
 export default Main;
