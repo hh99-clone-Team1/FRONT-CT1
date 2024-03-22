@@ -82,7 +82,9 @@ const ElementWrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const ImageContainer = styled.div`
