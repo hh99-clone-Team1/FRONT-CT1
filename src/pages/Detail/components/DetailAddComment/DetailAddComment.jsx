@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import palette from '../../../../styles/palette';
@@ -9,6 +9,7 @@ import likeSelectedIcon from '../../../../img/likeSelectedIcon.svg';
 import AddCommentIcon from '../../../../img/AddCommentIcon';
 import { addComment, getComments } from '../../../../axios/commentsAxios';
 import queryKeys from '../../../../constants/queryKeys';
+import ProfileButton from '../../../../components/ProfileButton';
 
 function DetailAddComment() {
   const isLike = '좋아요';
@@ -65,10 +66,10 @@ function DetailAddComment() {
 export default DetailAddComment;
 
 const DetailAddCommentLayout = styled.div`
-  overflow: hidden;
   border-radius: 0 0 32px 0;
   position: sticky;
   bottom: 0;
+  z-index: 1;
 `;
 
 const CommentBox = styled.div`
@@ -136,19 +137,9 @@ const InputBox = styled.form`
   }
 `;
 
-const Profile = styled(Link)`
-  text-decoration: none;
-  min-width: 48px;
-  height: 48px;
+const Profile = styled(ProfileButton)`
   margin-top: 16px;
-  border-radius: 25px;
-  background: skyblue;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-width: 48px;
 `;
 
 const ButtonBox = styled.button`

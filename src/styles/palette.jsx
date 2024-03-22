@@ -22,6 +22,8 @@ const palette = {
   blue: [
     '#1877F2', // facebook 로그인 버튼
   ],
+
+  profile: ['#E60023', '#767676', '#1877F2', '#00563f', '#ff6f00', '#371f76', '#ffef00', '#000', '#889970', '#16a7a1'],
 };
 
 export default palette;
