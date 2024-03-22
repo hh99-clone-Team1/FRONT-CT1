@@ -2,26 +2,28 @@
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import palette from '../../../../styles/palette';
 import likeIcon from '../../../../img/likeIcon.svg';
 import likeSelectedIcon from '../../../../img/likeSelectedIcon.svg';
 import AddCommentIcon from '../../../../img/AddCommentIcon';
 import { addComment, getComments } from '../../../../axios/commentAxios';
+import queryKeys from '../../../../constants/queryKeys';
 
 function DetailAddComment() {
   const isLike = '좋아요';
   const user = 'test';
   const { id: postId } = useParams();
   const [comment, setComment] = useState('');
+  const queryClient = useQueryClient();
 
-  const { data: comments } = useQuery({ queryKey: ['post-comments', `${postId}`], queryFn: () => getComments(postId) });
+  const { data: comments } = useQuery({ queryKey: queryKeys.comments([postId]), queryFn: () => getComments(postId) });
 
   const { mutate: handleAddComment } = useMutation({
     mutationFn: addComment,
     onSuccess: () => {
-      // Todo: 댓글 쿼리 최신화
       setComment('');
+      queryClient.invalidateQueries(queryKeys.comments([postId]));
     },
   });
 
@@ -29,8 +31,6 @@ function DetailAddComment() {
     e.preventDefault();
     handleAddComment({ postId, comment });
   };
-
-  console.log(comments);
 
   return (
     <DetailAddCommentLayout>
@@ -46,7 +46,12 @@ function DetailAddComment() {
             {user.split('')[0]}
           </Profile>
           <label htmlFor="comment-input">
-            <input id="comment-input" autoComplete="off" onChange={(e) => setComment(e.currentTarget.value)} />
+            <input
+              id="comment-input"
+              value={comment}
+              autoComplete="off"
+              onChange={(e) => setComment(e.currentTarget.value)}
+            />
             <ButtonBox type="submit" $active={comment}>
               <AddCommentIcon />
             </ButtonBox>
