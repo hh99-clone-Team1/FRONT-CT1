@@ -16,7 +16,7 @@ authInstance.interceptors.request.use((config) => {
   const token = getLocalStorage();
   if (token) {
     // eslint-disable-next-line no-param-reassign
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `${token}`;
   }
   return config;
 });
