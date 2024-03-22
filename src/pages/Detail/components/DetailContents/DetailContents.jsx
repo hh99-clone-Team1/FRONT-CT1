@@ -4,17 +4,22 @@ import { useQuery } from '@tanstack/react-query';
 import ImageContent from '../ImageContent';
 import DescriptionContent from '../DescriptionContent';
 import { getPostDetail } from '../../../../axios/postsAxios';
+import queryKeys from '../../../../constants/queryKeys';
 
 function DetailContents() {
   const { id } = useParams();
 
-  const { data: post } = useQuery({ queryKey: ['posts', id], queryFn: () => getPostDetail(id), enabled: !!id });
+  const { data: post } = useQuery({
+    queryKey: queryKeys.postDetail(id),
+    queryFn: () => getPostDetail(id),
+    enabled: !!id,
+  });
 
   if (!post) return <div>..loading</div>;
   return (
     <DetailContentsLayout>
       <ImageContent url={post.image} />
-      <DescriptionContent post={post} />
+      <DescriptionContent />
     </DetailContentsLayout>
   );
 }

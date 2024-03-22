@@ -1,25 +1,50 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import DetailComment from '../DetailComment/DetailComment';
+import { Link, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import DetailComments from '../DetailComments';
+import queryKeys from '../../../../constants/queryKeys';
+import { getPostDetail } from '../../../../axios/postsAxios';
+import ProfileButton from '../../../../components/ProfileButton';
 
-function DescriptionContentMain({ nickname, title, content }) {
+function DescriptionContentMain() {
+  const { id } = useParams();
+
+  const { data: post } = useQuery({
+    queryKey: queryKeys.postDetail(id),
+    queryFn: () => getPostDetail(id),
+    enabled: !!id,
+  });
+
+  if (!post) return null;
+
+  const { nickname, title, content } = post;
   return (
     <MainLayout>
       <ContentsBox>
-        <h1>{title}</h1>
+        <div>
+          <h1>{title}</h1>
+          <p>{content}</p>
+        </div>
       </ContentsBox>
-      <ContentsBox>
-        <p>{content}</p>
-      </ContentsBox>
-      <ContentsBox>
-        <Profile role="presentation" to={() => '유저페이지로 이동'}>
+      <ContentsBox />
+      <ContentsBox className="detail__profile-box">
+        <ProfileButton role="presentation" to={() => '유저페이지로 이동'}>
           {nickname.split('')[0]}
-        </Profile>
+        </ProfileButton>
         <Link className="content__user-name" to={() => '유저페이지로 이동'}>
           {nickname}
         </Link>
       </ContentsBox>
-      <DetailComment />
+      <ContentsBox>
+        <MemoText>
+          <strong>프라이빗 노트</strong>
+          <p>이 핀의 어떤 점을 기억하고 싶으세요?</p>
+        </MemoText>
+      </ContentsBox>
+      <ContentsBox>
+        <p style={{ fontWeight: 600 }}>댓글</p>
+      </ContentsBox>
+      <DetailComments />
     </MainLayout>
   );
 }
@@ -29,18 +54,22 @@ export default DescriptionContentMain;
 const MainLayout = styled.div`
   display: flex;
   flex-direction: column;
+
   h1 {
     word-wrap: break-word;
     font-size: 28px;
     font-weight: 600;
-    margin: 0;
+    margin-top: 30px;
   }
 
   .content__user-name {
-    margin-top: 16px;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
+  }
+
+  .detail__profile-box {
+    margin: 17px 0 36px;
   }
 `;
 
@@ -52,17 +81,18 @@ const ContentsBox = styled.div`
   align-items: center;
 `;
 
-const Profile = styled(Link)`
-  text-decoration: none;
-  width: 48px;
+const MemoText = styled.div`
   height: 48px;
-  margin-top: 16px;
-  border-radius: 25px;
-  background: skyblue;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 600;
+  margin: 20px 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+
+  strong {
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
 `;
