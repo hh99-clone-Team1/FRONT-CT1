@@ -12,13 +12,17 @@ const authInstance = axios.create({
 });
 
 // 로그인 할 때 token 처리를 interceptor로 해야함
-authInstance.interceptors.request.use((config) => {
-  const token = getLocalStorage();
-  if (token) {
-    // eslint-disable-next-line no-param-reassign
-    config.headers.Authorization = token;
-  }
-  return config;
-});
+authInstance.interceptors.request.use(
+  (config) => {
+    const token = getLocalStorage();
+    if (token) {
+      // eslint-disable-next-line no-param-reassign
+      config.headers.Authorization = token;
+    }
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 export { instance, authInstance };
