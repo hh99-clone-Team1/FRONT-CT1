@@ -6,7 +6,7 @@ const signupUser = async (newUserInfo) => {
     return response;
   } catch (error) {
     console.log(error.response);
-    throw error; // 에러를 throw하여 상위에서 처리할 수 있도록 함
+    throw error;
   }
 };
 
@@ -16,8 +16,18 @@ const loginUser = async (userInfo) => {
     return response;
   } catch (error) {
     console.log(userInfo);
-    throw error; // 에러를 throw하여 상위에서 처리할 수 있도록 함
+    throw error;
   }
 };
 
-export { signupUser, loginUser };
+const logoutUser = async (refreshToken) => {
+  try {
+    const response = await instance.post('/logout', { refreshToken });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export { signupUser, loginUser, logoutUser };
