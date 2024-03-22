@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import queryKeys from '../../../../constants/queryKeys';
 import { getComments } from '../../../../axios/commentsAxios';
+import ProfileButton from '../../../../components/ProfileButton';
+import IconBox from '../../../../components/IconBox';
+import EditCommentIcon from '../../../../img/EditCommentIcon';
+import palette from '../../../../styles/palette';
 
 function DetailComments() {
   const { id: postId } = useParams();
@@ -13,15 +17,22 @@ function DetailComments() {
     enabled: !!postId,
   });
 
-  if (!comments) return null;
-  console.log(comments[0].nickname);
+  if (!comments) return <EmptyText>아직 댓글이 없습니다! 대화를 시작하려면 하나를 추가하세요.</EmptyText>;
 
   return (
     <DeatailCommentsLayout>
-      {comments.map(({ nickname, content, commentId }) => (
+      {comments.map(({ nickname, content, commentId }, index) => (
         <CommentBox key={commentId}>
-          <Profile>{nickname[0]}</Profile>
-          {content}
+          <Profile num={index}>{nickname[0]}</Profile>
+          <div>
+            <TextBox>
+              <strong>{nickname}</strong>
+              <p>{content}</p>
+            </TextBox>
+            <EditButtonBox>
+              <EditCommentIcon />
+            </EditButtonBox>
+          </div>
         </CommentBox>
       ))}
     </DeatailCommentsLayout>
@@ -30,21 +41,48 @@ function DetailComments() {
 
 export default DetailComments;
 
-const DeatailCommentsLayout = styled.div``;
+const EmptyText = styled.p`
+  margin-top: 8px;
+  color: ${palette.gray[3]};
+`;
 
-const CommentBox = styled.div``;
+const DeatailCommentsLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
 
-const Profile = styled(Link)`
-  text-decoration: none;
-  width: 48px;
-  height: 48px;
-  margin-top: 16px;
-  border-radius: 25px;
-  background: skyblue;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 600;
+const CommentBox = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+`;
+
+const TextBox = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  margin-top: 8px;
+
+  strong {
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+  }
+`;
+
+const EditButtonBox = styled(IconBox)`
+  min-width: 24px;
+  max-width: 24px;
+  height: 24px;
+`;
+
+const Profile = styled(ProfileButton)`
+  width: 32px;
+  height: 32px;
+  font-weight: 400;
+  padding-bottom: 4px;
+  box-sizing: border-box;
 `;
