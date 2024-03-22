@@ -5,15 +5,19 @@ import DescriptionContentMain from '../DescriptionContentMain';
 import DetailAddComment from '../DetailAddComment';
 
 function DescriptionContent({ post }) {
+  const handleClickButton = () => {
+    console.log('핀 저장');
+  };
+
   return (
     <DescriptionContentLayout>
       <ContentBox>
         <ContentHeader>
-          <HeaderButton>저장</HeaderButton>
+          <HeaderButton onClick={handleClickButton}>저장</HeaderButton>
         </ContentHeader>
         <DescriptionContentMain {...post} />
       </ContentBox>
-      <DetailAddComment />
+      <DetailAddComment commentsCount={27} />
     </DescriptionContentLayout>
   );
 }

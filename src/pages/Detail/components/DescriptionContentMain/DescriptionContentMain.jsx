@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import DetailComment from '../DetailComment/DetailComment';
 
-function DescriptionContentMain({ userId, title, content }) {
+function DescriptionContentMain({ nickname, title, content }) {
   return (
     <MainLayout>
       <ContentsBox>
@@ -13,10 +13,10 @@ function DescriptionContentMain({ userId, title, content }) {
       </ContentsBox>
       <ContentsBox>
         <Profile role="presentation" to={() => '유저페이지로 이동'}>
-          {userId.split('')[0]}
+          {nickname.split('')[0]}
         </Profile>
         <Link className="content__user-name" to={() => '유저페이지로 이동'}>
-          {userId}
+          {nickname}
         </Link>
       </ContentsBox>
       <DetailComment />
@@ -29,7 +29,6 @@ export default DescriptionContentMain;
 const MainLayout = styled.div`
   display: flex;
   flex-direction: column;
-
   h1 {
     word-wrap: break-word;
     font-size: 28px;
