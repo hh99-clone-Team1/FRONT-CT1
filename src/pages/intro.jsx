@@ -129,7 +129,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      const refreshToken = data.headers.refreshToken;
+      const refreshToken = data.headers;
       const accessToken = data.data.accessToken;
       console.log(data);
       console.log(refreshToken);
