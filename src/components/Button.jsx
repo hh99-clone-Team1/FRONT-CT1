@@ -30,7 +30,7 @@ const Button = styled.button`
       background-color: ${palette.red[3]};
       color: white;
       &:hover {
-        background-color: ${palette.red[0]};
+        background-color: ${palette.red[1]};
       }
     `}
   ${(props) =>

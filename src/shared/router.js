@@ -3,7 +3,7 @@ import Intro from '../pages/intro';
 import Main from '../pages/main';
 import HeaderBox from './Header/HeaderBox';
 import Header from './Header/Header';
-import Detail from '../pages/Detail';
+import Detail from '../pages/Detail/Detail';
 
 function Router() {
   return (

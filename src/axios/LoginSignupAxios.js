@@ -1,4 +1,4 @@
-import instance from './api';
+import { instance } from './api';
 
 const signupUser = async (newUserInfo) => {
   try {
@@ -15,7 +15,7 @@ const loginUser = async (userInfo) => {
     const response = await instance.post('/login', userInfo);
     return response;
   } catch (error) {
-    console.log(error.response);
+    console.log(userInfo);
     throw error; // 에러를 throw하여 상위에서 처리할 수 있도록 함
   }
 };
