@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import palette from '../../styles/palette';
 
+const HeaderContainer = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: white;
+`;
+
 const IntroHeaderLayout = styled.div`
   display: flex;
   justify-content: space-between;
@@ -109,6 +117,7 @@ const ChangeModalComment = styled.div`
 `;
 
 export {
+  HeaderContainer,
   IntroHeaderLayout,
   HeaderLogoBox,
   HearderSearchBox,
