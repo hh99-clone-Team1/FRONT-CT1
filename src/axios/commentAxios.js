@@ -2,9 +2,9 @@ import instance from './api';
 
 const addComment = async ({ postId, comment }) => {
   try {
-    const { data } = instance.post(
+    const { data } = await instance.post(
       `/posts/${postId}/comments`,
-      { comment },
+      { content: comment },
       { headers: { Authorization: `Bearer ${process.env.REACT_APP_TOKEN}` } },
     );
     return data;
@@ -14,6 +14,17 @@ const addComment = async ({ postId, comment }) => {
   }
 };
 
-const getComments = async () => {};
+const getComments = async (postId) => {
+  try {
+    const { data } = await instance.get(`/posts/${postId}/comments`, {
+      headers: { Authorization: `Bearer ${process.env.REACT_APP_TOKEN}` },
+    });
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 export { addComment, getComments };

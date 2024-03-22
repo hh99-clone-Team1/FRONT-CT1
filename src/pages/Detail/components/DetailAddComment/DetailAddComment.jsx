@@ -2,18 +2,20 @@
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import palette from '../../../../styles/palette';
 import likeIcon from '../../../../img/likeIcon.svg';
 import likeSelectedIcon from '../../../../img/likeSelectedIcon.svg';
 import AddCommentIcon from '../../../../img/AddCommentIcon';
-import { addComment } from '../../../../axios/commentAxios';
+import { addComment, getComments } from '../../../../axios/commentAxios';
 
-function DetailAddComment({ commentsCount }) {
+function DetailAddComment() {
   const isLike = '좋아요';
   const user = 'test';
   const { id: postId } = useParams();
   const [comment, setComment] = useState('');
+
+  const { data: comments } = useQuery({ queryKey: ['post-comments', `${postId}`], queryFn: () => getComments(postId) });
 
   const { mutate: handleAddComment } = useMutation({
     mutationFn: addComment,
@@ -28,11 +30,13 @@ function DetailAddComment({ commentsCount }) {
     handleAddComment({ postId, comment });
   };
 
+  console.log(comments);
+
   return (
     <DetailAddCommentLayout>
       <CommentBox>
         <CountBox $isLike={isLike}>
-          <h3>댓글 {commentsCount}개</h3>
+          <h3>댓글 {comments?.length}개</h3>
           <div>
             <img src={isLike ? likeSelectedIcon : likeIcon} alt="like" />
           </div>
