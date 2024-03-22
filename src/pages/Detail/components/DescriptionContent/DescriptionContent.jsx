@@ -11,13 +11,13 @@ function DescriptionContent() {
 
   return (
     <DescriptionContentLayout>
+      <ContentHeader>
+        <HeaderButton onClick={handleClickButton}>저장</HeaderButton>
+      </ContentHeader>
       <ContentBox>
-        <ContentHeader>
-          <HeaderButton onClick={handleClickButton}>저장</HeaderButton>
-        </ContentHeader>
         <DescriptionContentMain />
       </ContentBox>
-      <DetailAddComment commentsCount={27} />
+      <DetailAddComment />
     </DescriptionContentLayout>
   );
 }
@@ -29,17 +29,20 @@ const DescriptionContentLayout = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 0 32px 32px 0;
+  max-height: calc(100vh - 96px);
 `;
 
 const ContentBox = styled.div`
   box-sizing: border-box;
   padding: 0 32px;
   flex: 1 1 auto;
+  overflow: scroll;
 `;
+
 const ContentHeader = styled.div`
   box-sizing: border-box;
-  width: 444px;
-  padding-top: 32px;
+  width: 508px;
+  padding: 32px 32px 0 0;
   min-height: 92px;
   border-radius: 0 32px 32px 0;
   background-color: #fff;

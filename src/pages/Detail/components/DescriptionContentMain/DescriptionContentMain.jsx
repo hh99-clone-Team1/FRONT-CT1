@@ -54,6 +54,7 @@ export default DescriptionContentMain;
 const MainLayout = styled.div`
   display: flex;
   flex-direction: column;
+
   h1 {
     word-wrap: break-word;
     font-size: 28px;

@@ -66,10 +66,10 @@ function DetailAddComment() {
 export default DetailAddComment;
 
 const DetailAddCommentLayout = styled.div`
-  overflow: hidden;
   border-radius: 0 0 32px 0;
   position: sticky;
   bottom: 0;
+  z-index: 1;
 `;
 
 const CommentBox = styled.div`
