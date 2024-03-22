@@ -4,7 +4,7 @@ import palette from '../../../../styles/palette';
 import DescriptionContentMain from '../DescriptionContentMain';
 import DetailAddComment from '../DetailAddComment';
 
-function DescriptionContent({ post }) {
+function DescriptionContent() {
   const handleClickButton = () => {
     console.log('핀 저장');
   };
@@ -15,7 +15,7 @@ function DescriptionContent({ post }) {
         <ContentHeader>
           <HeaderButton onClick={handleClickButton}>저장</HeaderButton>
         </ContentHeader>
-        <DescriptionContentMain {...post} />
+        <DescriptionContentMain />
       </ContentBox>
       <DetailAddComment commentsCount={27} />
     </DescriptionContentLayout>

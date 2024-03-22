@@ -1,8 +1,22 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import DetailComment from '../DetailComment/DetailComment';
+import { Link, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import DetailComments from '../DetailComments';
+import queryKeys from '../../../../constants/queryKeys';
+import { getPostDetail } from '../../../../axios/postsAxios';
 
-function DescriptionContentMain({ nickname, title, content }) {
+function DescriptionContentMain() {
+  const { id } = useParams();
+
+  const { data: post } = useQuery({
+    queryKey: queryKeys.postDetail(id),
+    queryFn: () => getPostDetail(id),
+    enabled: !!id,
+  });
+
+  if (!post) return null;
+
+  const { nickname, title, content } = post;
   return (
     <MainLayout>
       <ContentsBox>
@@ -19,7 +33,7 @@ function DescriptionContentMain({ nickname, title, content }) {
           {nickname}
         </Link>
       </ContentsBox>
-      <DetailComment />
+      <DetailComments />
     </MainLayout>
   );
 }
