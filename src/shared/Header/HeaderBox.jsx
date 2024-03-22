@@ -31,6 +31,7 @@ const HeaderBoxLayout = styled.div`
   position: fixed;
   top: 0;
   display: flex;
+  z-index: 99;
 
   &.scrolled {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 8px -8px;

@@ -7,7 +7,7 @@ import palette from '../../../../styles/palette';
 import likeIcon from '../../../../img/likeIcon.svg';
 import likeSelectedIcon from '../../../../img/likeSelectedIcon.svg';
 import AddCommentIcon from '../../../../img/AddCommentIcon';
-import { addComment, getComments } from '../../../../axios/commentAxios';
+import { addComment, getComments } from '../../../../axios/commentsAxios';
 import queryKeys from '../../../../constants/queryKeys';
 
 function DetailAddComment() {
