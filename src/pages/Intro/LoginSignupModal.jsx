@@ -14,7 +14,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthDay, setBirthday] = useState('');
 
   const handleEmailChange = (e) => {
     const email = e.target.value;
@@ -27,8 +27,8 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   };
 
   const handleBirthdayChange = (e) => {
-    const birthday = e.target.value;
-    setBirthday(birthday);
+    const birthDay = e.target.value;
+    setBirthday(birthDay);
   };
 
   const validateEmail = (email) => {
@@ -53,20 +53,21 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const newUserInfo = {
     email,
     password,
-    birthday,
+    birthDay,
   };
 
   // 회원가입 통신
   const signupMutation = useMutation({
     mutationFn: signupUser,
     onSuccess: (data) => {
-      if (data.status === 200) {
+      if (data.status === 201) {
         alert('회원가입에 성공했습니다.');
         setIsLogin(true);
       }
     },
     onError: (error) => {
-      console.log(data);
+      console.log('data', data);
+      console.log('data-body', data.body);
       alert('회원가입 실패 : ', error);
     },
   });
@@ -78,13 +79,14 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
       const refreshToken = data.headers;
       const { accessToken } = data.data;
       console.log(data);
-      console.log(refreshToken);
+      console.log('accessToken', accessToken);
+      console.log('refreshToken', refreshToken);
 
       if (data.status === 200) {
         setLocalStorage(accessToken);
         /*
           setCookie('refreshToken', refreshToken);
-          */
+        */
         localStorage.setItem('email', email);
         alert(`${email}님 로그인 성공!`);
         navigate('/main');
@@ -140,7 +142,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
         ) : (
           <>
             <InputName>생년월일</InputName>
-            <LabelInput type="date" value={birthday} onChange={handleBirthdayChange} />
+            <LabelInput type="date" value={birthDay} onChange={handleBirthdayChange} />
             <Button LightRed type="submit">
               계속하기
             </Button>

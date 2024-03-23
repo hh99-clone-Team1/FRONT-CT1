@@ -8,11 +8,12 @@ import likeIcon from '../../../../img/likeIcon.svg';
 import likeSelectedIcon from '../../../../img/likeSelectedIcon.svg';
 import AddCommentIcon from '../../../../img/AddCommentIcon';
 import { addComment, getComments } from '../../../../axios/commentsAxios';
+// import addLike from '../../../../axios/likeAxios';
 import queryKeys from '../../../../constants/queryKeys';
 import ProfileButton from '../../../../components/ProfileButton';
 
 function DetailAddComment() {
-  const isLike = '좋아요';
+  const [isLike, setIsLike] = useState(true);
   const user = 'test';
   const { id: postId } = useParams();
   const [comment, setComment] = useState('');
@@ -33,13 +34,26 @@ function DetailAddComment() {
     handleAddComment({ postId, comment });
   };
 
+  // const { mutate: handleLike } = useMutation({
+  //   mutationFn: addLike,
+  //   onSuccess: () => {},
+  // });
+
+  const handleLikeClick = () => {
+    setIsLike(!isLike);
+  };
+
   return (
     <DetailAddCommentLayout>
       <CommentBox>
         <CountBox $isLike={isLike}>
           <h3>댓글 {comments?.length}개</h3>
           <div>
-            <img src={isLike ? likeSelectedIcon : likeIcon} alt="like" />
+            <img src={likeSelectedIcon} alt="likeCount" />
+            <div>3</div>
+            <button type="button" onClick={handleLikeClick}>
+              <img src={isLike ? likeIcon : likeSelectedIcon} alt="like" />
+            </button>
           </div>
         </CountBox>
         <InputBox onSubmit={handleSubmit}>
@@ -88,16 +102,21 @@ const CountBox = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  div {
+    display: flex;
+  }
+
   h3 {
     font-size: 20px;
     font-weight: 600;
   }
 
-  div {
+  button {
     min-width: 48px;
     min-height: 48px;
+    border: none;
     border-radius: 24px;
-    background: ${({ $isLike }) => ($isLike ? palette.red[4] : palette.gray[2])};
+    background: ${({ $isLike }) => ($isLike ? palette.gray[2] : palette.red[4])};
     display: flex;
     align-items: center;
     justify-content: center;
