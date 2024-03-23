@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import './Imageboard.css';
-import Button from '../../components/Button';
 import { getPosts } from '../../axios/imagesAxios';
+import ImageCard from '../ImageCard/ImageCard';
 
 function Imageboard({ mainboard }) {
   const [fetchedPosts, setFetchedPosts] = useState([]);
@@ -41,6 +41,7 @@ function Imageboard({ mainboard }) {
             url: optimizedUrl,
             title: fetchedPosts[index].title,
             nickname: fetchedPosts[index].nickname,
+            postId: fetchedPosts[index].postId,
           };
         }),
       );
@@ -54,23 +55,11 @@ function Imageboard({ mainboard }) {
     <Wrapper>
       <Container className="mainboard">
         {optimizedImages.map((optimizedData) => (
-          <ImageWrapper>
-            <ImageContainer>
-              <ElementWrapper>
-                <img src={optimizedData.url} loading="lazy" alt="이미지" />
-                {mainboard && (
-                  <>
-                    <Button LightRed>저장</Button>
-                    <ImageName>{optimizedData.title}</ImageName>
-                    <UserNameContainer>
-                      <Profile>S</Profile>
-                      <UserName>{optimizedData.nickname}</UserName>
-                    </UserNameContainer>
-                  </>
-                )}
-              </ElementWrapper>
-            </ImageContainer>
-          </ImageWrapper>
+          <ImageCard
+            optimizedData={optimizedData}
+            mainboard={mainboard}
+            key={optimizedData.postId + optimizedData.title}
+          />
         ))}
       </Container>
     </Wrapper>
@@ -91,82 +80,4 @@ const Container = styled.div`
   margin: 0 auto;
   display: block;
   position: relative;
-`;
-
-const ElementWrapper = styled.div`
-  top: 0px;
-  left: 0px;
-  margin-bottom: 20px;
-  position: relative;
-  display: block;
-  overflow: hidden;
-  flex-direction: column;
-`;
-
-const ImageWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  width: 236px;
-  position: relative;
-
-  img {
-    display: flex;
-    width: 100%;
-    border-radius: 16px;
-    object-fit: cover;
-  }
-
-  button {
-    position: absolute;
-    top: 25px;
-    right: -15px;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    opacity: 0;
-  }
-
-  &:hover button {
-    opacity: 1;
-  }
-
-  &:hover img {
-    cursor: pointer;
-    filter: brightness(60%);
-  }
-`;
-
-const ImageName = styled.div`
-  position: relative;
-  padding: 5px 10px;
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 4px;
-`;
-
-const UserNameContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0px 10px;
-`;
-
-const UserName = styled.div`
-  font-size: 14px;
-`;
-
-const Profile = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: skyblue;
-  margin-right: 8px;
 `;

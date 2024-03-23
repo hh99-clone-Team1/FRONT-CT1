@@ -10,7 +10,7 @@ function usePins(postId) {
   const { handleAddPin } = useAddPin();
   const { handleDeletePin } = useDeletePin();
 
-  const pin = pins?.find(({ postId: selectedId }) => String(selectedId) === postId);
+  const pin = pins?.find(({ postId: selectedId }) => String(selectedId) === String(postId));
   const isContained = !!pin;
   const pinId = pin?.pinId ?? '';
 
