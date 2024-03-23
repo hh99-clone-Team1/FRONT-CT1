@@ -21,4 +21,14 @@ const getComments = async (postId) => {
   }
 };
 
-export { addComment, getComments };
+const editComment = async ({ postId, commentId, comment }) => {
+  try {
+    const { data } = await authInstance.put(`/posts/${postId}/comments/${commentId}`, { content: comment });
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export { addComment, getComments, editComment };

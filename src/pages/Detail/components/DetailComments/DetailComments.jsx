@@ -34,11 +34,7 @@ function DetailComments() {
       {comments.map(({ nickname, content, commentId }, index) => (
         <CommentBox key={commentId}>
           {editComment === commentId ? (
-            <DetailEditComment
-              selectedComment={content}
-              commentId={commentId}
-              handleClickCancelButton={handleCancelEdit}
-            />
+            <DetailEditComment selectedComment={content} commentId={commentId} handleCloseEditBox={handleCancelEdit} />
           ) : (
             <>
               <Profile num={index}>{nickname[0]}</Profile>

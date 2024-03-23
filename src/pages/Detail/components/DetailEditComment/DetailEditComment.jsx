@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 import palette from '../../../../styles/palette';
 import Button from '../../../../components/Button';
+import { editComment } from '../../../../axios/commentsAxios';
+import queryKeys from '../../../../constants/queryKeys';
 
-function DetailEditComment({ selectedComment, handleClickCancelButton }) {
+function DetailEditComment({ selectedComment, commentId, handleCloseEditBox }) {
+  const { id: postId } = useParams();
   const [comment, setComment] = useState(selectedComment);
   const [scrollHeight, setScrollHeight] = useState(0);
   const textareaRef = useRef();
@@ -17,9 +22,18 @@ function DetailEditComment({ selectedComment, handleClickCancelButton }) {
     }
   }, [comment]);
 
+  const queryClient = useQueryClient();
+  const { mutate: handleEditComment } = useMutation({
+    mutationFn: editComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.comments(postId));
+      handleCloseEditBox();
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(comment);
+    handleEditComment({ postId, commentId, comment });
   };
 
   return (
@@ -34,7 +48,7 @@ function DetailEditComment({ selectedComment, handleClickCancelButton }) {
         />
       </label>
       <ButtonBox>
-        <ButtonStyles onClick={handleClickCancelButton} type="button" Gray>
+        <ButtonStyles onClick={handleCloseEditBox} type="button" Gray>
           취소
         </ButtonStyles>
         <ButtonStyles type="submit" LightRed>
