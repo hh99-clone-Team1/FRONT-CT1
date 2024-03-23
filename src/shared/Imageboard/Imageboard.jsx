@@ -2,15 +2,31 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import './Imageboard.css';
 import Button from '../../components/Button';
+import { getPosts } from '../../axios/imagesAxios';
 
-function Imageboard({ images, mainboard }) {
+function Imageboard({ mainboard }) {
+  const [imageUrls, setImageUrls] = useState([]);
   const [optimizedImages, setOptimizedImages] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const posts = await getPosts();
+        const urls = posts.map((image) => image.url);
+        setImageUrls(urls);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     // 이미지 매핑
     const optimizeImages = async () => {
       const optimizedUrls = await Promise.all(
-        images.map(async (imageUrl) => {
+        imageUrls.map(async (imageUrl) => {
           const img = new Image();
           img.src = imageUrl;
           await img.decode();
@@ -26,7 +42,7 @@ function Imageboard({ images, mainboard }) {
     };
 
     optimizeImages();
-  }, [images]);
+  }, [imageUrls]);
 
   return (
     <Wrapper>
