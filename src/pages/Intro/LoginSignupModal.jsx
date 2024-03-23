@@ -6,17 +6,9 @@ import { useMutation } from '@tanstack/react-query';
 import { setLocalStorage } from '../../utils/storageUtils';
 import LabelInput from '../../components/LabelInput';
 import { signupUser, loginUser } from '../../axios/LoginSignupAxios';
-import {
-  ModalWrapper,
-  ModalContent,
-  ModalCloseButton,
-  InputName,
-  IdeaComment,
-  StrongComment,
-  ServiceComment,
-  OrComment,
-  ChangeModalComment,
-} from './Intro.module';
+import styled from 'styled-components';
+import palette from '../../styles/palette';
+import { LogoIcon } from '../../img/HeaderIcons';
 
 function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const navigate = useNavigate();
@@ -129,7 +121,10 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
     <ModalWrapper>
       <ModalContent onSubmit={handleFormSubmit}>
         <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
-        <h2>Pinterest에 오신 것을 환영합니다</h2>
+        <IconWrapper>
+          <LogoIcon color={palette.red[3]} />
+        </IconWrapper>
+        <WelcomComment>Pinterest에 오신 것을 환영합니다</WelcomComment>
         {!isLogin && <IdeaComment>시도해 볼만한 새로운 아이디어 찾기</IdeaComment>}
         <InputName>이메일</InputName>
         <LabelInput type="email" placeholder="이메일" value={email} onChange={handleEmailChange} />
@@ -177,5 +172,96 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
     </ModalWrapper>
   );
 }
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+const ModalContent = styled.form`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 257px;
+  height: 450px;
+  padding: 86px;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0 0 5px;
+`;
+
+const ModalCloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
+const IconWrapper = styled.div`
+  padding-bottom: 10px;
+`;
+
+const WelcomComment = styled.div`
+  font-size: 26px;
+  padding-bottom: 10px;
+  font-weight: 600;
+`;
+
+const InputName = styled.div`
+  text-align: left;
+  padding: 10px 0px 0px 10px;
+  font-size: 13px;
+`;
+
+const IdeaComment = styled.div`
+  font-size: 14px;
+`;
+
+const StrongComment = styled.div`
+  text-align: left;
+  padding: 5px 0px 10px 0px;
+  font-size: 12px;
+  font-weight: bold;
+`;
+
+const ServiceComment = styled.div`
+  padding: 15px;
+  font-size: 9.7px;
+`;
+
+const OrComment = styled.div`
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+`;
+
+const FacebookLogo = styled.img`
+  width: 15px;
+  height: 15px;
+  border-radius: 100px;
+  border: 1px solid white;
+  margin-right: 30px;
+`;
+
+const ChangeModalComment = styled.div`
+  font-size: 10px;
+  font-weight: bold;
+`;
 
 export default LoginSignupModal;
