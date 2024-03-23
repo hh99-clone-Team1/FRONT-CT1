@@ -5,6 +5,7 @@ import Button from '../../components/Button';
 import { getPosts } from '../../axios/imagesAxios';
 
 function Imageboard({ mainboard }) {
+  const [fetchedPosts, setFetchedPosts] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const [optimizedImages, setOptimizedImages] = useState([]);
 
@@ -12,7 +13,8 @@ function Imageboard({ mainboard }) {
     const fetchData = async () => {
       try {
         const posts = await getPosts();
-        const urls = posts.map((image) => image.url);
+        setFetchedPosts(posts);
+        const urls = posts.map((post) => post.url);
         setImageUrls(urls);
       } catch (error) {
         console.error(error);
@@ -25,8 +27,8 @@ function Imageboard({ mainboard }) {
   useEffect(() => {
     // 이미지 매핑
     const optimizeImages = async () => {
-      const optimizedUrls = await Promise.all(
-        imageUrls.map(async (imageUrl) => {
+      const optimizedData = await Promise.all(
+        imageUrls.map(async (imageUrl, index) => {
           const img = new Image();
           img.src = imageUrl;
           await img.decode();
@@ -35,30 +37,34 @@ function Imageboard({ mainboard }) {
           const quality = 80;
           const format = 'webp';
           const optimizedUrl = `${imageUrl}?w=${newWidth}&h=${newHeight}&q=${quality}&fm=${format}&fit=crop`;
-          return optimizedUrl;
+          return {
+            url: optimizedUrl,
+            title: fetchedPosts[index].title,
+            nickname: fetchedPosts[index].nickname,
+          };
         }),
       );
-      setOptimizedImages(optimizedUrls);
+      setOptimizedImages(optimizedData);
     };
 
     optimizeImages();
-  }, [imageUrls]);
+  }, [imageUrls, fetchedPosts]);
 
   return (
     <Wrapper>
       <Container className="mainboard">
-        {optimizedImages.map((optimizedUrl) => (
+        {optimizedImages.map((optimizedData) => (
           <ImageWrapper>
             <ImageContainer>
               <ElementWrapper>
-                <img src={optimizedUrl} loading="lazy" alt="이미지" />
+                <img src={optimizedData.url} loading="lazy" alt="이미지" />
                 {mainboard && (
                   <>
                     <Button LightRed>저장</Button>
-                    <ImageName>이미지 이름</ImageName>
+                    <ImageName>{optimizedData.title}</ImageName>
                     <UserNameContainer>
                       <Profile>S</Profile>
-                      <UserName>유저이름</UserName>
+                      <UserName>{optimizedData.nickname}</UserName>
                     </UserNameContainer>
                   </>
                 )}
