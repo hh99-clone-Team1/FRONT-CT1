@@ -7,6 +7,7 @@ import { getComments } from '../../../../axios/commentsAxios';
 import ProfileButton from '../../../../components/ProfileButton';
 import palette from '../../../../styles/palette';
 import DetailCommentPopup from '../DetailCommentPopup/DetailCommentPopup';
+import DetailEditComment from '../DetailEditComment';
 
 function DetailComments() {
   const { id: postId } = useParams();
@@ -22,6 +23,10 @@ function DetailComments() {
     setEditComment(commentId);
   };
 
+  const handleCancelEdit = () => {
+    setEditComment('');
+  };
+
   if (!comments) return <EmptyText>아직 댓글이 없습니다! 대화를 시작하려면 하나를 추가하세요.</EmptyText>;
 
   return (
@@ -29,7 +34,11 @@ function DetailComments() {
       {comments.map(({ nickname, content, commentId }, index) => (
         <CommentBox key={commentId}>
           {editComment === commentId ? (
-            <div>{commentId}:를 수정하기</div>
+            <DetailEditComment
+              selectedComment={content}
+              commentId={commentId}
+              handleClickCancelButton={handleCancelEdit}
+            />
           ) : (
             <>
               <Profile num={index}>{nickname[0]}</Profile>
