@@ -1,18 +1,30 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import Button from '../../../../components/Button';
 import palette from '../../../../styles/palette';
 import DescriptionContentMain from '../DescriptionContentMain';
 import DetailAddComment from '../DetailAddComment';
+import useAddPin from '../../../../customHooks/useAddPin';
+import useCheckPostIdInPins from '../../../../customHooks/useCheckPostIdInPins';
+import useDeletePin from '../../../../customHooks/useDeletePin';
 
 function DescriptionContent() {
-  const handleClickButton = () => {
-    console.log('핀 저장');
-  };
+  const { id: postId } = useParams();
+  // Todo: userId로 변경
+  const userId = 2;
+
+  const { handleAddPin } = useAddPin();
+  const { handleDeletePin } = useDeletePin();
+  const { pinId, isContained } = useCheckPostIdInPins(userId, postId);
+
+  const handleClickButton = () => (isContained ? handleDeletePin(pinId) : handleAddPin(postId));
 
   return (
     <DescriptionContentLayout>
       <ContentHeader>
-        <HeaderButton onClick={handleClickButton}>저장</HeaderButton>
+        <HeaderButton $isContained={isContained} onClick={handleClickButton}>
+          {isContained ? '저장됨' : '저장'}
+        </HeaderButton>
       </ContentHeader>
       <ContentBox>
         <DescriptionContentMain />
@@ -53,6 +65,6 @@ const ContentHeader = styled.div`
 `;
 
 const HeaderButton = styled(Button)`
-  background: ${palette.red[3]};
+  background: ${({ $isContained }) => ($isContained ? '#000' : palette.red[3])};
   color: #fff;
 `;
