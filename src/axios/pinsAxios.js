@@ -9,6 +9,23 @@ const addPin = async (postId) => {
   }
 };
 
-const getPins = async () => {};
+const getPins = async (userId) => {
+  try {
+    const { data } = await authInstance.get(`/pins/${userId}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
-export { addPin, getPins };
+const deletePin = async (postId) => {
+  try {
+    await authInstance.delete(`/pins/${postId}`);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export { addPin, getPins, deletePin };
