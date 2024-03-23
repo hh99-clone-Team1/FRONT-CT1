@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import usePins from '../../customHooks/usePins';
 import palette from '../../styles/palette';
@@ -6,8 +7,10 @@ import palette from '../../styles/palette';
 function ImageCard({ optimizedData, mainboard }) {
   const { handleSetPin, isContained } = usePins(optimizedData.postId);
 
+  const navigation = useNavigate();
+
   return (
-    <ImageWrapper key={optimizedData.postId}>
+    <ImageWrapper onClick={() => navigation(`/detail/${optimizedData.postId}`)} key={optimizedData.postId}>
       <ImageContainer $isContained={isContained}>
         <ElementWrapper>
           <img src={optimizedData.url} loading="lazy" alt="이미지" />
