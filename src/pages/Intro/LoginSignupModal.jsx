@@ -1,15 +1,12 @@
 /* eslint-disable*/
-import { useState } from 'react';
-import Button from '../components/Button';
-import LabelInput from '../components/LabelInput';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import Button from '../../components/Button';
 import { useMutation } from '@tanstack/react-query';
-import { signupUser, loginUser } from '../axios/LoginSignupAxios';
+import { setLocalStorage } from '../../utils/storageUtils';
+import LabelInput from '../../components/LabelInput';
+import { signupUser, loginUser } from '../../axios/LoginSignupAxios';
 import {
-  IntroHeaderLayout,
-  HeaderLogoBox,
-  HearderSearchBox,
-  HeaderChoiceBox,
   ModalWrapper,
   ModalContent,
   ModalCloseButton,
@@ -19,50 +16,7 @@ import {
   ServiceComment,
   OrComment,
   ChangeModalComment,
-} from './intro.module';
-import { setLocalStorage } from '../utils/storageUtils';
-
-function Intro() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleLogin = () => {
-    setIsLogin(true);
-    openModal();
-  };
-  const handleSignup = () => {
-    setIsLogin(false);
-    openModal();
-  };
-
-  return (
-    <IntroHeaderLayout>
-      <div>
-        <HeaderLogoBox>Pinterest </HeaderLogoBox>
-        <HearderSearchBox>탐색 </HearderSearchBox>
-      </div>
-      <div>
-        <HeaderChoiceBox>소개 </HeaderChoiceBox>
-        <HeaderChoiceBox>비즈니스 </HeaderChoiceBox>
-        <HeaderChoiceBox>언론 </HeaderChoiceBox>
-        <Button LightRed type="button" onClick={handleLogin}>
-          로그인
-        </Button>
-        <Button LightGray type="button" onClick={handleSignup}>
-          가입하기
-        </Button>
-      </div>
-
-      {isModalOpen && <LoginSignupModal closeModal={closeModal} isLogin={isLogin} setIsLogin={setIsLogin} />}
-    </IntroHeaderLayout>
-  );
-}
+} from './Intro.module';
 
 function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   const navigate = useNavigate();
@@ -130,15 +84,15 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
     mutationFn: loginUser,
     onSuccess: (data) => {
       const refreshToken = data.headers;
-      const accessToken = data.data.accessToken;
+      const { accessToken } = data.data;
       console.log(data);
       console.log(refreshToken);
 
       if (data.status === 200) {
         setLocalStorage(accessToken);
         /*
-        setCookie('refreshToken', refreshToken);
-        */
+          setCookie('refreshToken', refreshToken);
+          */
         localStorage.setItem('email', email);
         alert(`${email}님 로그인 성공!`);
         navigate('/main');
@@ -178,9 +132,9 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
         <h2>Pinterest에 오신 것을 환영합니다</h2>
         {!isLogin && <IdeaComment>시도해 볼만한 새로운 아이디어 찾기</IdeaComment>}
         <InputName>이메일</InputName>
-        <LabelInput type={'email'} placeholder={'이메일'} value={email} onChange={handleEmailChange} />
+        <LabelInput type="email" placeholder="이메일" value={email} onChange={handleEmailChange} />
         <InputName>비밀번호</InputName>
-        <LabelInput type={'password'} placeholder={'비밀번호'} value={password} onChange={handlePasswordChange} />
+        <LabelInput type="password" placeholder="비밀번호" value={password} onChange={handlePasswordChange} />
         {isLogin ? (
           <>
             <StrongComment>비밀번호를 잊으셨나요?</StrongComment>
@@ -191,7 +145,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
         ) : (
           <>
             <InputName>생년월일</InputName>
-            <LabelInput type={'date'} value={birthday} onChange={handleBirthdayChange} />
+            <LabelInput type="date" value={birthday} onChange={handleBirthdayChange} />
             <Button LightRed type="submit">
               계속하기
             </Button>
@@ -224,4 +178,4 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
   );
 }
 
-export default Intro;
+export default LoginSignupModal;
