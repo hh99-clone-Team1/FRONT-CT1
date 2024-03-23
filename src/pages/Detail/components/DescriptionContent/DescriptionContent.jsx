@@ -4,25 +4,17 @@ import Button from '../../../../components/Button';
 import palette from '../../../../styles/palette';
 import DescriptionContentMain from '../DescriptionContentMain';
 import DetailAddComment from '../DetailAddComment';
-import useAddPin from '../../../../customHooks/useAddPin';
-import useCheckPostIdInPins from '../../../../customHooks/useCheckPostIdInPins';
-import useDeletePin from '../../../../customHooks/useDeletePin';
+import usePins from '../../../../customHooks/usePins';
 
 function DescriptionContent() {
   const { id: postId } = useParams();
-  // Todo: userId로 변경
-  const userId = 2;
 
-  const { handleAddPin } = useAddPin();
-  const { handleDeletePin } = useDeletePin();
-  const { pinId, isContained } = useCheckPostIdInPins(userId, postId);
-
-  const handleClickButton = () => (isContained ? handleDeletePin(pinId) : handleAddPin(postId));
+  const { handleSetPin, isContained } = usePins(postId);
 
   return (
     <DescriptionContentLayout>
       <ContentHeader>
-        <HeaderButton $isContained={isContained} onClick={handleClickButton}>
+        <HeaderButton $isContained={isContained} onClick={handleSetPin}>
           {isContained ? '저장됨' : '저장'}
         </HeaderButton>
       </ContentHeader>
