@@ -19,6 +19,7 @@ authInstance.interceptors.request.use(
       // eslint-disable-next-line no-param-reassign
       config.headers.Authorization = token;
     }
+    return config;
   },
   (error) => {
     return Promise.reject(error);

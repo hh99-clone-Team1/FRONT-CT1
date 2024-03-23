@@ -18,13 +18,13 @@ function DetailAddComment() {
   const [comment, setComment] = useState('');
   const queryClient = useQueryClient();
 
-  const { data: comments } = useQuery({ queryKey: queryKeys.comments([postId]), queryFn: () => getComments(postId) });
+  const { data: comments } = useQuery({ queryKey: queryKeys.comments(postId), queryFn: () => getComments(postId) });
 
   const { mutate: handleAddComment } = useMutation({
     mutationFn: addComment,
     onSuccess: () => {
       setComment('');
-      queryClient.invalidateQueries(queryKeys.comments([postId]));
+      queryClient.invalidateQueries(queryKeys.comments(postId));
     },
   });
 
