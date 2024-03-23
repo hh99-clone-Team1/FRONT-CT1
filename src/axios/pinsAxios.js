@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { authInstance } from './api';
 
 const addPin = async (postId) => {

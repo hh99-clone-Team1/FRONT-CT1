@@ -18,7 +18,7 @@ function DetailContents() {
   if (!post) return <div>..loading</div>;
   return (
     <DetailContentsLayout>
-      <ImageContent url={post.image} />
+      <ImageContent url={post.url} />
       <DescriptionContent />
     </DetailContentsLayout>
   );
