@@ -43,7 +43,7 @@ function DetailComments() {
                   <strong>{nickname}</strong>
                   <p>{content}</p>
                 </TextBox>
-                <DetailCommentPopup handleEditButtonClick={() => handleEditComment(commentId)} />
+                <DetailCommentPopup handleEditButtonClick={() => handleEditComment(commentId)} commentId={commentId} />
               </div>
             </>
           )}

@@ -1,13 +1,19 @@
+/* eslint-disable no-unused-vars */
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 import IconBox from '../../../../components/IconBox';
 import EditCommentIcon from '../../../../img/EditCommentIcon';
 import palette from '../../../../styles/palette';
+import { deleteComment } from '../../../../axios/commentsAxios';
+import queryKeys from '../../../../constants/queryKeys';
 
-function DetailCommentPopup({ handleEditButtonClick }) {
+function DetailCommentPopup({ handleEditButtonClick, commentId }) {
   const [onPopOver, setOnPopOver] = useState(false);
   const [isActive, setIsActive] = useState('수정');
   const popupRef = useRef();
+  const { id: postId } = useParams();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,6 +27,14 @@ function DetailCommentPopup({ handleEditButtonClick }) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [popupRef]);
+
+  const queryClient = useQueryClient();
+  const { mutate: handleDeleteComment } = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.comments(postId));
+    },
+  });
 
   return (
     <PopupLayout>
@@ -38,7 +52,11 @@ function DetailCommentPopup({ handleEditButtonClick }) {
             >
               수정
             </PopupButton>
-            <PopupButton onMouseOver={() => setIsActive('삭제')} $active={isActive === '삭제'}>
+            <PopupButton
+              onClick={() => handleDeleteComment({ postId, commentId })}
+              onMouseOver={() => setIsActive('삭제')}
+              $active={isActive === '삭제'}
+            >
               삭제
             </PopupButton>
           </PopupBox>
