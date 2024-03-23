@@ -45,11 +45,15 @@ function Intro() {
 
     if (outerDivRef.current) {
       outerDivRef.current.addEventListener('wheel', wheelHandler);
-      return () => {
-        outerDivRef.current.removeEventListener('wheel', wheelHandler);
-      };
     }
-  }, [outerDivRef]);
+
+    // clean-up 함수는 이전 이벤트 리스너를 제거함
+    return () => {
+      if (outerDivRef.current) {
+        outerDivRef.current.removeEventListener('wheel', wheelHandler);
+      }
+    };
+  }, []); // 빈 의존성 배열을 전달하여, useEffect가 한 번만 실행되도록 함
 
   return (
     <IntroLayout ref={outerDivRef}>

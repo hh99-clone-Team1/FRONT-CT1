@@ -4,6 +4,7 @@ import Main from '../pages/main';
 import HeaderBox from './Header/HeaderBox';
 import Header from './Header/Header';
 import Detail from '../pages/Detail/Detail';
+import MyPage from '../pages/MyPage/MyPage';
 
 function Router() {
   return (
@@ -29,6 +30,17 @@ function Router() {
                 <Header />
               </HeaderBox>
               <Detail />
+            </>
+          }
+        />
+        <Route
+          path="/mypage"
+          element={
+            <>
+              <HeaderBox>
+                <Header />
+              </HeaderBox>
+              <MyPage />
             </>
           }
         />
