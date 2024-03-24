@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import './Imageboard.css';
 import { getPosts } from '../../axios/imagesAxios';
 import ImageCard from '../ImageCard/ImageCard';
+import optimizeImage from '../ImageCard/ImageOptimization';
 
 function Imageboard({ mainboard }) {
   const [fetchedPosts, setFetchedPosts] = useState([]);
@@ -25,25 +26,17 @@ function Imageboard({ mainboard }) {
   }, []);
 
   useEffect(() => {
-    // 이미지 매핑
     const optimizeImages = async () => {
       const optimizedData = await Promise.all(
         imageUrls.map(async (imageUrl, index) => {
-          const img = new Image();
-          img.src = imageUrl;
-          await img.decode();
-          const newWidth = img.naturalWidth * 0.66;
-          const newHeight = img.naturalHeight * 0.66;
-          const quality = 80;
-          const format = 'webp';
-          const optimizedUrl = `${imageUrl}?w=${newWidth}&h=${newHeight}&q=${quality}&fm=${format}&fit=crop`;
-          return {
-            url: optimizedUrl,
-            title: fetchedPosts[index].title,
-            nickname: fetchedPosts[index].nickname,
-            postId: fetchedPosts[index].postId,
-            userId: fetchedPosts[index].userId,
-          };
+          const optimized = await optimizeImage(
+            imageUrl,
+            fetchedPosts[index].title,
+            fetchedPosts[index].nickname,
+            fetchedPosts[index].postId,
+            fetchedPosts[index].userId,
+          );
+          return optimized;
         }),
       );
       setOptimizedImages(optimizedData);
