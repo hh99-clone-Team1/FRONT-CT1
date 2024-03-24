@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import DetailComments from '../DetailComments';
 import queryKeys from '../../../../constants/queryKeys';
 import { getPostDetail } from '../../../../axios/postsAxios';
-import ProfileButton from '../../../../components/ProfileButton';
+import Profile from '../../../../components/Profile';
 
 function DescriptionContentMain() {
   const { id } = useParams();
@@ -17,7 +17,8 @@ function DescriptionContentMain() {
 
   if (!post) return null;
 
-  const { nickname, title, content } = post;
+  const { nickname, title, content, userId } = post;
+
   return (
     <MainLayout>
       <ContentsBox>
@@ -28,10 +29,10 @@ function DescriptionContentMain() {
       </ContentsBox>
       <ContentsBox />
       <ContentsBox className="detail__profile-box">
-        <ProfileButton role="presentation" to={() => '유저페이지로 이동'}>
-          {nickname.split('')[0]}
-        </ProfileButton>
-        <Link className="content__user-name" to={() => '유저페이지로 이동'}>
+        <Link to={`/mypage/${nickname}`}>
+          <Profile num={userId % 10}>{nickname[0]}</Profile>
+        </Link>
+        <Link className="content__user-name" to={`/mypage/${nickname}`}>
           {nickname}
         </Link>
       </ContentsBox>
@@ -70,6 +71,11 @@ const MainLayout = styled.div`
 
   .detail__profile-box {
     margin: 17px 0 36px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
   }
 `;
 

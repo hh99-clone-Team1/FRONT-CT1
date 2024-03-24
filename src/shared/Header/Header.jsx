@@ -4,10 +4,13 @@ import IconBox from '../../components/IconBox';
 import palette from '../../styles/palette';
 import { ChatIcon, DropdownIcon, LogoIcon, NoticeIcon } from '../../img/HeaderIcons';
 import SearchInput from './SearchInput';
-import MyProfile from '../../components/MyProfile';
+import Profile from '../../components/Profile';
+import { useUser } from '../../customHooks/useUserContext';
 
 function Header() {
   const test = 'test'; // Todo: path에 따라 버튼 background 변경
+  const { user } = useUser();
+
   return (
     <HeaderLayout>
       <IconBox>
@@ -23,7 +26,7 @@ function Header() {
         <ChatIcon color={palette.gray[3]} />
       </IconBox>
       <IconBox>
-        <MyProfile />
+        <HeaderProfile num={user.userId % 10}>{user.nickname[0]}</HeaderProfile>
       </IconBox>
       <IconStyles>
         <DropdownIcon color={palette.gray[3]} />
@@ -66,4 +69,10 @@ const IconStyles = styled.div`
   &:hover {
     background: ${palette.gray[2]};
   }
+`;
+
+const HeaderProfile = styled(Profile)`
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
 `;

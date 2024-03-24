@@ -10,11 +10,12 @@ import AddCommentIcon from '../../../../img/AddCommentIcon';
 import { addComment, getComments } from '../../../../axios/commentsAxios';
 // import addLike from '../../../../axios/likeAxios';
 import queryKeys from '../../../../constants/queryKeys';
-import ProfileButton from '../../../../components/ProfileButton';
+import Profile from '../../../../components/Profile';
+import { useUser } from '../../../../customHooks/useUserContext';
 
 function DetailAddComment() {
+  const { user } = useUser();
   const [isLike, setIsLike] = useState(true);
-  const user = 'test';
   const { id: postId } = useParams();
   const [comment, setComment] = useState('');
   const queryClient = useQueryClient();
@@ -57,9 +58,7 @@ function DetailAddComment() {
           </div>
         </CountBox>
         <InputBox onSubmit={handleSubmit}>
-          <Profile role="presentation" to={() => '유저페이지로 이동'}>
-            {user.split('')[0]}
-          </Profile>
+          <ProfileButton num={user.userId % 10}>{user.nickname.split('')[0]}</ProfileButton>
           <label htmlFor="comment-input">
             <input
               id="comment-input"
@@ -156,7 +155,7 @@ const InputBox = styled.form`
   }
 `;
 
-const Profile = styled(ProfileButton)`
+const ProfileButton = styled(Profile)`
   margin-top: 16px;
   min-width: 48px;
 `;

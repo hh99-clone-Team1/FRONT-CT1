@@ -42,6 +42,7 @@ function Imageboard({ mainboard }) {
             title: fetchedPosts[index].title,
             nickname: fetchedPosts[index].nickname,
             postId: fetchedPosts[index].postId,
+            userId: fetchedPosts[index].userId,
           };
         }),
       );

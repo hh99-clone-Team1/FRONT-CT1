@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import palette from '../styles/palette';
 
-const ProfileButton = styled(Link)`
+const Profile = styled.div`
   text-decoration: none;
   width: 48px;
   height: 48px;
@@ -16,4 +15,4 @@ const ProfileButton = styled(Link)`
   justify-content: center;
 `;
 
-export default ProfileButton;
+export default Profile;
