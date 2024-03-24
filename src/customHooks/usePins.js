@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import useAddPin from './useAddPin';
 import useDeletePin from './useDeletePin';
 import useGetPins from './useGetPins';
@@ -15,7 +14,7 @@ function usePins(postId) {
   const isContained = !!pin;
   const pinId = pin?.pinId ?? '';
 
-  const handleSetPin = (e) => (isContained ? handleDeletePin(pinId) : handleAddPin(postId));
+  const handleSetPin = () => (isContained ? handleDeletePin(pinId) : handleAddPin(postId));
 
   return { handleSetPin, isContained };
 }

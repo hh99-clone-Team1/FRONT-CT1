@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import usePins from '../../customHooks/usePins';
 import palette from '../../styles/palette';
@@ -26,12 +26,8 @@ function ImageCard({ optimizedData, mainboard }) {
               </Button>
               <ImageName>{optimizedData.title}</ImageName>
               <UserNameContainer>
-                <MainLink to={`/mypage/${optimizedData.nickname}`}>
-                  <MainProfile num={optimizedData.userId % 10}>{optimizedData.nickname[0]}</MainProfile>
-                </MainLink>
-                <MainLink>
-                  <UserName>{optimizedData.nickname}</UserName>
-                </MainLink>
+                <MainProfile num={optimizedData.userId % 10}>{optimizedData.nickname[0]}</MainProfile>
+                <UserName>{optimizedData.nickname}</UserName>
               </UserNameContainer>
             </>
           )}
@@ -120,9 +116,4 @@ const MainProfile = styled(Profile)`
   width: 30px;
   height: 30px;
   font-size: 14px;
-`;
-
-const MainLink = styled(Link)`
-  text-decoration: none;
-  color: #000;
 `;
