@@ -35,7 +35,7 @@ function Router() {
           }
         />
         <Route
-          path="/mypage"
+          path="/mypage/:userId"
           element={
             <>
               <HeaderBox>

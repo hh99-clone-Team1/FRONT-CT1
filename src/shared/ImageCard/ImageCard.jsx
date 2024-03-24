@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import usePins from '../../customHooks/usePins';
 import palette from '../../styles/palette';
+import Profile from '../../components/Profile';
 
 function ImageCard({ optimizedData, mainboard }) {
   const { handleSetPin, isContained } = usePins(optimizedData.postId);
 
   const navigation = useNavigate();
-
   return (
     <ImageWrapper onClick={() => navigation(`/detail/${optimizedData.postId}`)} key={optimizedData.postId}>
       <ImageContainer $isContained={isContained}>
@@ -21,8 +21,12 @@ function ImageCard({ optimizedData, mainboard }) {
               </Button>
               <ImageName>{optimizedData.title}</ImageName>
               <UserNameContainer>
-                <Profile>S</Profile>
-                <UserName>{optimizedData.nickname}</UserName>
+                <MainLink to={`/mypage/${optimizedData.nickname}`}>
+                  <MainProfile num={optimizedData.userId % 10}>{optimizedData.nickname[0]}</MainProfile>
+                </MainLink>
+                <MainLink>
+                  <UserName>{optimizedData.nickname}</UserName>
+                </MainLink>
               </UserNameContainer>
             </>
           )}
@@ -100,19 +104,20 @@ const UserNameContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0px 10px;
+  gap: 8px;
 `;
 
 const UserName = styled.div`
   font-size: 14px;
 `;
 
-const Profile = styled.div`
+const MainProfile = styled(Profile)`
   width: 30px;
   height: 30px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: skyblue;
-  margin-right: 8px;
+  font-size: 14px;
+`;
+
+const MainLink = styled(Link)`
+  text-decoration: none;
+  color: #000;
 `;

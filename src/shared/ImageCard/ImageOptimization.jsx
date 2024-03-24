@@ -1,4 +1,4 @@
-async function optimizeImage(imageUrl, title, nickname, postId) {
+async function optimizeImage(imageUrl, title, nickname, postId, userId) {
   const img = new Image();
   img.src = imageUrl;
   await img.decode();
@@ -11,6 +11,7 @@ async function optimizeImage(imageUrl, title, nickname, postId) {
     title,
     nickname,
     postId,
+    userId,
   };
 }
 

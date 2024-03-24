@@ -34,6 +34,7 @@ function Imageboard({ mainboard }) {
             fetchedPosts[index].title,
             fetchedPosts[index].nickname,
             fetchedPosts[index].postId,
+            fetchedPosts[index].userId,
           );
           return optimized;
         }),

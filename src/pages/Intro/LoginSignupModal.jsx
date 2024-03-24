@@ -88,6 +88,7 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
           setCookie('refreshToken', refreshToken);
         */
         localStorage.setItem('email', email);
+        localStorage.setItem('userColorNum', Math.floor(Math.random() * 10));
         alert(`${email}님 로그인 성공!`);
         navigate('/main');
       }

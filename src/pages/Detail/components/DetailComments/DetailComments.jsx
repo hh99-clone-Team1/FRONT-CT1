@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
 import queryKeys from '../../../../constants/queryKeys';
 import { getComments } from '../../../../axios/commentsAxios';
-import ProfileButton from '../../../../components/ProfileButton';
 import palette from '../../../../styles/palette';
 import DetailCommentPopup from '../DetailCommentPopup/DetailCommentPopup';
 import DetailEditComment from '../DetailEditComment';
+import Profile from '../../../../components/Profile';
 
 function DetailComments() {
   const { id: postId } = useParams();
@@ -31,16 +31,20 @@ function DetailComments() {
 
   return (
     <DeatailCommentsLayout>
-      {comments.map(({ nickname, content, commentId }, index) => (
+      {comments.map(({ nickname, content, commentId, userId }) => (
         <CommentBox key={commentId}>
           {editComment === commentId ? (
             <DetailEditComment selectedComment={content} commentId={commentId} handleCloseEditBox={handleCancelEdit} />
           ) : (
             <>
-              <Profile num={index}>{nickname[0]}</Profile>
+              <Link to={`/mypage/${nickname}`}>
+                <CommentProfile num={userId % 10}>{nickname[0]}</CommentProfile>
+              </Link>
               <div>
                 <TextBox>
-                  <strong>{nickname}</strong>
+                  <Link to={`/mypage/${nickname}`}>
+                    <strong>{nickname}</strong>
+                  </Link>
                   <p>{content}</p>
                 </TextBox>
                 <DetailCommentPopup handleEditButtonClick={() => handleEditComment(commentId)} commentId={commentId} />
@@ -87,7 +91,7 @@ const TextBox = styled.div`
   }
 `;
 
-const Profile = styled(ProfileButton)`
+const CommentProfile = styled(Profile)`
   width: 32px;
   height: 32px;
   font-weight: 400;
