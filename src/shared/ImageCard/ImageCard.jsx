@@ -7,8 +7,13 @@ import Profile from '../../components/Profile';
 
 function ImageCard({ optimizedData, mainboard }) {
   const { handleSetPin, isContained } = usePins(optimizedData.postId);
-
   const navigation = useNavigate();
+
+  const handleClickButton = (e) => {
+    e.stopPropagation();
+    handleSetPin();
+  };
+
   return (
     <ImageWrapper onClick={() => navigation(`/detail/${optimizedData.postId}`)} key={optimizedData.postId}>
       <ImageContainer $isContained={isContained}>
@@ -16,7 +21,7 @@ function ImageCard({ optimizedData, mainboard }) {
           <img src={optimizedData.url} loading="lazy" alt="이미지" />
           {mainboard && (
             <>
-              <Button onClick={handleSetPin} LightRed>
+              <Button onClick={handleClickButton} LightRed>
                 {isContained ? '저장됨' : '저장'}
               </Button>
               <ImageName>{optimizedData.title}</ImageName>
@@ -73,7 +78,7 @@ const ImageContainer = styled.div`
     top: 25px;
     right: -15px;
     transform: translate(-50%, -50%);
-    z-index: 1;
+    z-index: 3;
     opacity: 0;
     background: ${({ $isContained }) => ($isContained ? '#000' : palette.red[3])};
 
