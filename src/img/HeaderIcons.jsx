@@ -70,4 +70,36 @@ function SearchCloseIcon() {
   );
 }
 
-export { LogoIcon, NoticeIcon, ChatIcon, DropdownIcon, SearchIcon, SearchCloseIcon };
+function SortIcon() {
+  return (
+    <svg
+      className="Uvi gUZ U9O kVc"
+      height="20"
+      width="20"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      aria-label=""
+      role="img"
+    >
+      <path d="M9 19.5A1.75 1.75 0 1 1 9 16a1.75 1.75 0 0 1 0 3.5M22.25 16h-8.32a5.24 5.24 0 0 0-9.86 0H1.75a1.75 1.75 0 0 0 0 3.5h2.32a5.24 5.24 0 0 0 9.86 0h8.32a1.75 1.75 0 0 0 0-3.5M15 4.5A1.75 1.75 0 1 1 15 8a1.75 1.75 0 0 1 0-3.5M1.75 8h8.32a5.24 5.24 0 0 0 9.86 0h2.32a1.75 1.75 0 0 0 0-3.5h-2.32a5.24 5.24 0 0 0-9.86 0H1.75a1.75 1.75 0 0 0 0 3.5" />
+    </svg>
+  );
+}
+
+function PlusIcon() {
+  return (
+    <svg
+      className="Uvi gUZ U9O kVc"
+      height="20"
+      width="20"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      aria-label=""
+      role="img"
+    >
+      <path d="M22 10h-8V2a2 2 0 0 0-4 0v8H2a2 2 0 0 0 0 4h8v8a2 2 0 0 0 4 0v-8h8a2 2 0 0 0 0-4" />
+    </svg>
+  );
+}
+
+export { LogoIcon, NoticeIcon, ChatIcon, DropdownIcon, SearchIcon, SearchCloseIcon, SortIcon, PlusIcon };

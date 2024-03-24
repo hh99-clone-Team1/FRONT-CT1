@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import Button from '../../../components/Button';
 import palette from '../../../styles/palette';
-import Imageboard from '../../../shared/Imageboard/Imageboard';
+import MadenImgs from './MadenImgs';
+import SavedImgs from './SavedImgs';
 
 function MyPageContents() {
   const username = localStorage.getItem('username');
@@ -32,10 +33,7 @@ function MyPageContents() {
           저장됨
         </SavedButton>
       </SelectImgType>
-      <div>
-        {selectedButton === 'MadenButton' ? <Imageboard /> : null}
-        {selectedButton === 'SavedButton' ? <h1>두번째 페이지</h1> : null}
-      </div>
+      {selectedButton === 'MadenButton' ? <MadenImgs /> : <SavedImgs />}
     </>
   );
 }
@@ -62,7 +60,7 @@ const MyName = styled.div`
 const MyEmail = styled.div`
   margin: 5px;
   font-size: 14px;
-  color: #767676;
+  color: ${palette.gray[3]};
 `;
 
 const Following = styled.div`
