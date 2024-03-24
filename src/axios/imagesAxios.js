@@ -10,9 +10,9 @@ const getPosts = async () => {
   }
 };
 
-const getImages = async () => {
+const getMyImages = async () => {
   try {
-    const response = await authInstance.get(`/posts`);
+    const response = await authInstance.get(`/images`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -20,4 +20,14 @@ const getImages = async () => {
   }
 };
 
-export { getPosts, getImages };
+const getMyPins = async (userId) => {
+  try {
+    const response = await authInstance.get(`/pins/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export { getPosts, getMyImages, getMyPins };
