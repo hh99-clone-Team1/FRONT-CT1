@@ -10,7 +10,7 @@ function MyPage() {
 }
 
 const MyPageLayout = styled.div`
-  padding-top: 80px;
+  padding: 80px 20px 0px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
