@@ -55,6 +55,17 @@ const Button = styled.button`
       }
     `}
   ${(props) =>
+    props.GrayLong &&
+    css`
+      width: 370px;
+      height: 43px;
+      padding: 10px 15px;
+      background-color: ${palette.gray[0]};
+      &:hover {
+        background-color: ${palette.gray[1]};
+      }
+    `}
+  ${(props) =>
     props.Black &&
     css`
       background-color: white;
