@@ -4,6 +4,7 @@ import IconBox from '../../components/IconBox';
 import palette from '../../styles/palette';
 import { ChatIcon, DropdownIcon, LogoIcon, NoticeIcon } from '../../img/HeaderIcons';
 import SearchInput from './SearchInput';
+import MyProfile from '../../components/MyProfile';
 
 function Header() {
   const test = 'test'; // Todo: path에 따라 버튼 background 변경
@@ -22,7 +23,7 @@ function Header() {
         <ChatIcon color={palette.gray[3]} />
       </IconBox>
       <IconBox>
-        <Profile>s</Profile>
+        <MyProfile />
       </IconBox>
       <IconStyles>
         <DropdownIcon color={palette.gray[3]} />
@@ -51,15 +52,6 @@ const NaviButton = styled(Button)`
     color: #fff;
     background: ${palette.black[0]};
   }
-`;
-
-const Profile = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  background: skyblue;
 `;
 
 const IconStyles = styled.div`
