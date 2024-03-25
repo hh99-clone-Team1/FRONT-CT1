@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Intro from '../pages/Intro/Intro';
-import Main from '../pages/main';
 import HeaderBox from './Header/HeaderBox';
 import Header from './Header/Header';
 import Detail from '../pages/Detail/Detail';
 import MyPage from '../pages/MyPage/MyPage';
 import AddImage from '../pages/AddImage/AddImage';
+import MainPage from '../pages/Main/MainPage';
 
 function Router() {
   return (
@@ -19,7 +19,7 @@ function Router() {
               <HeaderBox>
                 <Header />
               </HeaderBox>
-              <Main />
+              <MainPage />
             </>
           }
         />
