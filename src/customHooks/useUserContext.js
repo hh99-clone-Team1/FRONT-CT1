@@ -6,9 +6,9 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
   const [user, setUser] = useState({ nickname: '', userId: 0 });
   const email = localStorage.getItem('email');
-  const token = localStorage.getItem('accessToken').split(' ')[1];
+  const token = localStorage.getItem('accessToken') ? localStorage.getItem('accessToken').split(' ')[1] : '';
   useEffect(() => {
-    setUser({ nickname: email.split('@')[0], userId: jwtDecode(token).userId, email });
+    setUser({ nickname: email ? email.split('@')[0] : '', userId: token ? jwtDecode(token).userId : 0, email });
   }, [email]);
 
   return (
