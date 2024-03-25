@@ -34,22 +34,25 @@ const postImage = async (imageFile) => {
   try {
     const formData = new FormData();
     formData.append('image', imageFile);
+    console.log(formData);
     const response = await authInstance.post(`/images`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
     console.log(response.data);
-    return response.url;
+    console.log(response.data.response.imageId);
+    const imageUrl = response.data.response.imageId;
+    return imageUrl;
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
 
-const postPost = async (formData) => {
+const postPost = async (postContent) => {
   try {
-    const response = await authInstance.post(`/posts`, formData);
+    const response = await authInstance.post(`/posts`, postContent);
     return response.data;
   } catch (error) {
     console.log(error);

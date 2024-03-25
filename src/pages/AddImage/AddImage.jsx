@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import palette from '../../styles/palette';
 import IconBox from '../../components/IconBox';
@@ -9,23 +10,26 @@ import { postImage, postPost } from '../../axios/imagesAxios';
 
 function AddImage() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [formData, setFormData] = useState({
+  const [postContent, setPostContent] = useState({
     title: '',
     content: '',
     link: '',
-    url: '',
+    imageId: '',
   });
+
+  const navigate = useNavigate();
 
   const handleFileSelect = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       try {
-        const { url } = await postImage(file);
-        console.log(url);
+        const formData = new FormData();
+        formData.append('image', file);
+        const imageUrl = await postImage(file);
         setSelectedFile(file);
-        setFormData((prevFormData) => ({
+        setPostContent((prevFormData) => ({
           ...prevFormData,
-          url,
+          imageId: imageUrl,
         }));
       } catch (error) {
         console.log(error);
@@ -35,17 +39,30 @@ function AddImage() {
 
   const handleSubmit = async () => {
     try {
-      const response = await postPost(formData);
+      if (!postContent.imageId) {
+        alert('이미지를 등록해주세요.');
+        return;
+      }
+
+      const postData = {
+        title: postContent.title || ' ',
+        content: postContent.content || ' ',
+        link: postContent.link || ' ',
+        imageId: postContent.imageId,
+      };
+
+      const response = await postPost(postData);
       console.log(response);
+      navigate('/main');
     } catch (error) {
-      console.log(formData);
+      console.log(postContent);
       console.log(error);
     }
   };
 
   const handleTitleChange = (e) => {
     const { value } = e.target;
-    setFormData((prevFormData) => ({
+    setPostContent((prevFormData) => ({
       ...prevFormData,
       title: value,
     }));
@@ -53,7 +70,7 @@ function AddImage() {
 
   const handleContentChange = (e) => {
     const { value } = e.target;
-    setFormData((prevFormData) => ({
+    setPostContent((prevFormData) => ({
       ...prevFormData,
       content: value,
     }));
@@ -61,7 +78,7 @@ function AddImage() {
 
   const handleLinkChange = (e) => {
     const { value } = e.target;
-    setFormData((prevFormData) => ({
+    setPostContent((prevFormData) => ({
       ...prevFormData,
       link: value,
     }));
@@ -146,20 +163,20 @@ function AddImage() {
           <ImageInputSide selectedFile={selectedFile}>
             <InputWrapper>
               <InputName>제목</InputName>
-              <LabelInput type="title" placeholder="제목 추가" value={formData.title} onChange={handleTitleChange} />
+              <LabelInput type="title" placeholder="제목 추가" value={postContent.title} onChange={handleTitleChange} />
             </InputWrapper>
             <InputWrapper>
               <InputName>설명</InputName>
               <InputHigh
                 type="content"
                 placeholder="자세한 설명을 추가하세요"
-                value={formData.content}
+                value={postContent.content}
                 onChange={handleContentChange}
               />
             </InputWrapper>
             <InputWrapper>
               <InputName>링크</InputName>
-              <LabelInput type="link" placeholder="링크 추가" value={formData.link} onChange={handleLinkChange} />
+              <LabelInput type="link" placeholder="링크 추가" value={postContent.link} onChange={handleLinkChange} />
             </InputWrapper>
             <InputNotice>
               불법 촬영 콘텐츠 등을 게시하는 경우 Pinterest는 한국 전기통신사업법 22-5조에 따라 해당 콘텐츠의 액세스를
