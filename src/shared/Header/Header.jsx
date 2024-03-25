@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Button from '../../components/Button';
 import IconBox from '../../components/IconBox';
 import palette from '../../styles/palette';
@@ -6,18 +8,28 @@ import { ChatIcon, DropdownIcon, LogoIcon, NoticeIcon } from '../../img/HeaderIc
 import SearchInput from './SearchInput';
 import Profile from '../../components/Profile';
 import { useUser } from '../../customHooks/useUserContext';
+import HeaderDropDown from './HeaderDropDown';
 
 function Header() {
-  const test = 'test'; // Todo: path에 따라 버튼 background 변경
+  const navigation = useNavigate();
+  const { pathname } = useLocation();
+  const isAddPage = pathname === '/addImage';
   const { user } = useUser();
+  const [isOnToggle, setIsOnToggle] = useState();
+
+  const handleClickToggle = () => setIsOnToggle(!isOnToggle);
 
   return (
     <HeaderLayout>
-      <IconBox>
+      <IconBox onClick={() => navigation('/main')}>
         <LogoIcon color={palette.red[3]} />
       </IconBox>
-      <NaviButton className={test !== 'test' && 'header__navi-button--selected'}>홈</NaviButton>
-      <NaviButton className={test === 'test' && 'header__navi-button--selected'}>만들기</NaviButton>
+      <NaviButton onClick={() => navigation('/main')} className={!isAddPage && 'header__navi-button--selected'}>
+        홈
+      </NaviButton>
+      <NaviButton onClick={() => navigation('/addImage')} className={isAddPage && 'header__navi-button--selected'}>
+        만들기
+      </NaviButton>
       <SearchInput />
       <IconBox>
         <NoticeIcon color={palette.gray[3]} />
@@ -25,12 +37,13 @@ function Header() {
       <IconBox>
         <ChatIcon color={palette.gray[3]} />
       </IconBox>
-      <IconBox>
+      <IconBox onClick={() => navigation(`/mypage/${user.userId}/${user.nickname}`)}>
         <HeaderProfile num={user.userId % 10}>{user.nickname[0]}</HeaderProfile>
       </IconBox>
-      <IconStyles>
+      <IconStyles onClick={handleClickToggle}>
         <DropdownIcon color={palette.gray[3]} />
       </IconStyles>
+      {isOnToggle && <HeaderDropDown />}
     </HeaderLayout>
   );
 }

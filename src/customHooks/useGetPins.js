@@ -4,7 +4,8 @@ import { getPins } from '../axios/pinsAxios';
 
 function useGetPins(userId) {
   const { data } = useQuery({ queryKey: queryKeys.pins(userId), queryFn: () => getPins(userId) });
-  return { pins: data?.pins };
+
+  return { pins: data };
 }
 
 export default useGetPins;

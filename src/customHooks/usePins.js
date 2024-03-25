@@ -1,12 +1,12 @@
 import useAddPin from './useAddPin';
 import useDeletePin from './useDeletePin';
 import useGetPins from './useGetPins';
+import { useUser } from './useUserContext';
 
 function usePins(postId) {
-  // Todo: userId로 변경
-  const userId = 2;
+  const { user } = useUser();
 
-  const { pins } = useGetPins(userId);
+  const { pins } = useGetPins(user.userId);
   const { handleAddPin } = useAddPin();
   const { handleDeletePin } = useDeletePin();
 
