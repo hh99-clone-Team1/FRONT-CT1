@@ -58,11 +58,11 @@ const MyIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px;
   width: 120px;
   height: 120px;
-  background-color: ${palette.gray[0]};
+  margin: 5px;
   border-radius: 100px;
+  background-color: ${palette.gray[0]};
   font-size: 48px;
   font-weight: 500;
 `;
@@ -75,8 +75,8 @@ const MyName = styled.div`
 
 const MyEmail = styled.div`
   margin: 5px;
-  font-size: 14px;
   color: ${palette.gray[3]};
+  font-size: 14px;
 `;
 
 const Following = styled.div`

@@ -37,6 +37,7 @@ const DropDown = styled.div`
   position: absolute;
   top: 20px;
   right: 0;
+  z-index: 2;
   box-sizing: border-box;
   min-width: 180px;
   min-height: 40px;
@@ -44,8 +45,6 @@ const DropDown = styled.div`
   border-radius: 16px;
   background: #fff;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  z-index: 2;
 
   .dropdown__section-title {
     margin: 8px;
@@ -54,12 +53,12 @@ const DropDown = styled.div`
 `;
 
 const ProfileBox = styled.div`
+  display: flex;
   box-sizing: border-box;
+  gap: 8px;
   padding: 8px;
   margin-bottom: 20px;
   border-radius: 8px;
-  display: flex;
-  gap: 8px;
   cursor: pointer;
 
   &:hover {
@@ -68,14 +67,14 @@ const ProfileBox = styled.div`
 `;
 
 const DropdownProfile = styled(Profile)`
+  align-items: center;
+  box-sizing: border-box;
   width: 60px;
   height: 60px;
+  padding-bottom: 8px;
   border-radius: 40px;
   font-size: 32px;
   font-weight: 400;
-  align-items: center;
-  padding-bottom: 8px;
-  box-sizing: border-box;
 `;
 
 const ProfileTextBox = styled.div`
@@ -89,19 +88,19 @@ const ProfileTextBox = styled.div`
   }
 
   p {
-    font-size: 14px;
     margin: 0;
     color: ${palette.gray[3]};
+    font-size: 14px;
   }
 `;
 
 const PopupButton = styled.button`
+  display: flex;
+  align-items: center;
   height: 36px;
   width: 100%;
   border: none;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;

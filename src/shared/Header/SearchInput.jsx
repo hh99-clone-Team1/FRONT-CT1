@@ -33,13 +33,13 @@ const SearchInputLayout = styled.div`
 `;
 
 const InputBox = styled.div`
-  height: 48px;
-  background: ${palette.gray[4]};
-  border-radius: 24px;
   display: flex;
   align-items: center;
-  padding-left: 16px;
   gap: 8px;
+  height: 48px;
+  padding-left: 16px;
+  border-radius: 24px;
+  background: ${palette.gray[4]};
 
   ${({ $isFocus }) => $isFocus && 'box-shadow: 0 0 0 4px rgba(0, 132, 255, 0.5)'};
 
@@ -62,13 +62,13 @@ const IconBoxStyles = styled(IconBox)`
 `;
 
 const Input = styled.input`
-  height: 100%;
   width: 100%;
+  height: 100%;
+  color: #333;
+  border: none;
+  background: none;
   font-weight: 400;
   font-size: 16px;
-  color: #333;
-  background: none;
-  border: none;
   outline: none;
 
   &::placeholder {

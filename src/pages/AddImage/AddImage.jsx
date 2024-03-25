@@ -216,17 +216,17 @@ const AddContainer = styled.div`
 `;
 
 const TopBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: fixed;
-  padding-top: 80px;
   top: 0;
   left: 85px;
   width: calc(100% - 85px);
   height: 80px;
-  background-color: white;
+  padding-top: 80px;
   border-bottom: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background-color: white;
 `;
 
 const ButtonWrapper = styled.div`
@@ -247,19 +247,19 @@ const SideIcon = styled.div`
 `;
 
 const ImageAddContainer = styled.div`
-  padding-top: 185px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 185px;
 `;
 
 const ImageAddSide = styled.div`
-  width: 370px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  width: 370px;
 `;
 
 const ImageInputSide = styled.div`
@@ -278,54 +278,53 @@ const InputWrapper = styled.div`
 `;
 
 const InputName = styled.div`
-  text-align: left;
   padding: 10px 0px 0px 5px;
   font-size: 13px;
+  text-align: left;
 `;
 
 const InputNotice = styled.div`
   width: 530px;
-  text-align: left;
+  margin-left: 10px 0px 0px 5px;
   font-size: 13px;
-  margin-left: 5px;
-  margin-top: 10px;
+  text-align: left;
 `;
 
 const ImageAddBox = styled.button`
-  width: 370px;
-  height: 450px;
-  border: 2px dashed ${palette.gray[6]};
-  border-radius: 30px;
-  background-color: ${palette.gray[0]};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 370px;
+  height: 450px;
+  border: 2px dashed ${palette.gray[6]};
+  border-radius: 30px;
+  background-color: ${palette.gray[0]};
   cursor: pointer;
 `;
 
 const BoxText = styled.div`
-  font-size: 16px;
-  width: 220px;
   display: flex;
   align-items: center;
-  text-align: center;
   margin-top: 10px;
+  font-size: 16px;
+  width: 220px;
+  text-align: center;
 `;
 
 const BoxNotice = styled.div`
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 20px;
   width: 350px;
   font-size: 13px;
   text-align: center;
-  position: absolute;
-  padding-bottom: 20px;
-  bottom: 0;
 `;
 
 const DummyBox = styled.div`
-  border-bottom: 1px solid #ccc;
   margin-bottom: 25px;
+  border-bottom: 1px solid #ccc;
   ${(props) =>
     props.Long &&
     css`
@@ -342,16 +341,15 @@ const DummyBox = styled.div`
 
 const InputHigh = styled.textarea`
   box-sizing: border-box;
+  resize: none;
   width: 100%;
   height: 105px;
+  margin: 8px 0px 15px 0px;
   padding: 12px 16px;
-  border-radius: 16px;
   border: 2px solid #cdcdcd;
+  border-radius: 16px;
   color: ${palette.black[0]};
   font-size: 16px;
-  resize: none;
-  margin-top: 8px;
-  margin-bottom: 15px;
 
   &::placeholder {
     position: absolute;
@@ -367,9 +365,9 @@ const InputHigh = styled.textarea`
 
 const ImageAddWrapper = styled.div`
   position: absolute;
+  overflow: hidden;
   width: 370px;
   height: 450px;
-  overflow: hidden;
   border-radius: 30px;
 
   img {
@@ -380,18 +378,19 @@ const ImageAddWrapper = styled.div`
 `;
 
 const EditButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 15px;
   right: 15px;
   width: 43px;
   height: 43px;
-  border-radius: 25px;
   border: none;
+  border-radius: 25px;
   background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
+
   &:hover {
     background-color: ${palette.gray[0]};
   }

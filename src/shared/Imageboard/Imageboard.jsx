@@ -79,15 +79,15 @@ function Imageboard({ mainboard }) {
 export default Imageboard;
 
 const Wrapper = styled.div`
-  padding-top: 80px;
   display: block;
   justify-content: center;
+  padding-top: 80px;
   width: 100%;
 `;
 
 const Container = styled.div`
-  height: 100%;
-  margin: 0 auto;
   display: block;
   position: relative;
+  height: 100%;
+  margin: 0 auto;
 `;

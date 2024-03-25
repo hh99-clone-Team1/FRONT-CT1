@@ -35,7 +35,7 @@ function IntroHeader() {
           <HeaderLogoBox>Pinterest </HeaderLogoBox>
           <HearderSearchBox>탐색 </HearderSearchBox>
         </HeaderLeft>
-        <HeaderRight>
+        <div>
           <HeaderChoiceBox>소개 </HeaderChoiceBox>
           <HeaderChoiceBox>비즈니스 </HeaderChoiceBox>
           <HeaderChoiceBox>언론 </HeaderChoiceBox>
@@ -45,7 +45,7 @@ function IntroHeader() {
           <Button LightGray type="button" onClick={handleSignup}>
             가입하기
           </Button>
-        </HeaderRight>
+        </div>
       </IntroHeaderLayout>
       {isModalOpen && <LoginSignupModal closeModal={closeModal} isLogin={isLogin} setIsLogin={setIsLogin} />}
     </HeaderContainer>
@@ -55,16 +55,16 @@ function IntroHeader() {
 const HeaderContainer = styled.div`
   position: fixed;
   top: 0;
-  width: 100%;
   z-index: 999;
+  width: 100%;
   background-color: white;
 `;
 
 const IntroHeaderLayout = styled.div`
   display: flex;
   justify-content: space-between;
-  text-align: center;
   margin: 10px 20px 20px 10px;
+  text-align: center;
 `;
 
 const HeaderLeft = styled.div`
@@ -76,29 +76,31 @@ const IconWrapper = styled.div`
   padding-top: 5px;
 `;
 
-const HeaderRight = styled.div``;
-
 const HeaderLogoBox = styled.span`
   padding: 4px 10px 0px 5px;
   color: #cc0000;
   font-size: 20px;
   font-weight: 600;
 `;
+
 const HearderSearchBox = styled.span`
   padding: 9px;
   border-radius: 10px;
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
+
   &:hover {
     background-color: ${palette.gray[0]};
   }
 `;
+
 const HeaderChoiceBox = styled.span`
   padding-right: 30px;
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
+  
   &:hover {
     text-decoration-line: underline;
   }
