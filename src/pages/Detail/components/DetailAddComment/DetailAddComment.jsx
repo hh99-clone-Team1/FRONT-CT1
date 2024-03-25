@@ -8,10 +8,11 @@ import likeIcon from '../../../../img/likeIcon.svg';
 import likeSelectedIcon from '../../../../img/likeSelectedIcon.svg';
 import AddCommentIcon from '../../../../img/AddCommentIcon';
 import { addComment, getComments } from '../../../../axios/commentsAxios';
-// import addLike from '../../../../axios/likeAxios';
+import { addLike } from '../../../../axios/likeAxios';
 import queryKeys from '../../../../constants/queryKeys';
 import Profile from '../../../../components/Profile';
 import { useUser } from '../../../../customHooks/useUserContext';
+import { getPostDetail } from '../../../../axios/postsAxios';
 
 function DetailAddComment() {
   const { user } = useUser();
@@ -35,14 +36,31 @@ function DetailAddComment() {
     handleAddComment({ postId, comment });
   };
 
-  // const { mutate: handleLike } = useMutation({
-  //   mutationFn: addLike,
-  //   onSuccess: () => {},
-  // });
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['likes'],
+    queryFn: () => getPostDetail(postId),
+  });
 
-  const handleLikeClick = () => {
+  const addLikesMutation = useMutation({
+    mutationFn: addLike,
+    onSuccess: async () => {
+      queryClient.invalidateQueries(queryKeys.postDetail(postId));
+    },
+  });
+
+  const handleLikeClick = async () => {
     setIsLike(!isLike);
+    addLikesMutation.mutate(postId);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error fetching choi data</div>;
+  }
+
+  console.log('choi data', data);
 
   return (
     <DetailAddCommentLayout>
@@ -51,7 +69,7 @@ function DetailAddComment() {
           <h3>댓글 {comments?.length}개</h3>
           <div>
             <img src={likeSelectedIcon} alt="likeCount" />
-            <div>3</div>
+            <LikesCnt>{data.likes.length}</LikesCnt>
             <button type="button" onClick={handleLikeClick}>
               <img src={isLike ? likeIcon : likeSelectedIcon} alt="like" />
             </button>
@@ -77,6 +95,12 @@ function DetailAddComment() {
 }
 
 export default DetailAddComment;
+
+const LikesCnt = styled.div`
+  margin: 0px 20px 0px 8px;
+  align-items: center;
+  font-weight: 500;
+`;
 
 const DetailAddCommentLayout = styled.div`
   border-radius: 0 0 32px 0;

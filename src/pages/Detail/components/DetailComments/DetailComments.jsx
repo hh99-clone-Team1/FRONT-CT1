@@ -19,6 +19,8 @@ function DetailComments() {
     enabled: !!postId,
   });
 
+  console.log('choi comments', comments);
+
   const handleEditComment = (commentId) => {
     setEditComment(commentId);
   };
@@ -37,12 +39,12 @@ function DetailComments() {
             <DetailEditComment selectedComment={content} commentId={commentId} handleCloseEditBox={handleCancelEdit} />
           ) : (
             <>
-              <Link to={`/mypage/${nickname}`}>
+              <Link to={`/mypage/${userId}/${nickname}`}>
                 <CommentProfile num={userId % 10}>{nickname[0]}</CommentProfile>
               </Link>
               <div>
                 <TextBox>
-                  <Link to={`/mypage/${nickname}`}>
+                  <Link to={`/mypage/${userId}/${nickname}`}>
                     <strong>{nickname}</strong>
                   </Link>
                   <p>{content}</p>
