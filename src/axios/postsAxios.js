@@ -1,7 +1,15 @@
 /* eslint-disable no-console */
 import { authInstance } from './api';
 
-const getPosts = () => {};
+const getPostsByUser = async (userId) => {
+  try {
+    const { data } = await authInstance.get(`/posts/user/${userId}`);
+    return data;
+  } catch (error) {
+    console.log('choi error');
+    throw error;
+  }
+};
 
 const getPostDetail = async (id) => {
   try {
@@ -13,4 +21,4 @@ const getPostDetail = async (id) => {
   }
 };
 
-export { getPosts, getPostDetail };
+export { getPostsByUser, getPostDetail };

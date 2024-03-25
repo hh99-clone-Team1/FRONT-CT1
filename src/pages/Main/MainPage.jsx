@@ -1,55 +1,31 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import { getPosts } from '../../axios/imagesAxios';
 import Imageboard from '../../shared/Imageboard/Imageboard';
 
 function MainPage() {
   const [fetchedPosts, setFetchedPosts] = useState([]);
-  const [pageId, setPageId] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
-        const posts = await getPosts(pageId);
-        setFetchedPosts((prevPosts) => [...prevPosts, ...posts]);
-        setLoading(false);
-        if (posts.length === 0) {
-          setHasMore(false);
-        }
+        const posts = await getPosts();
+        setFetchedPosts(posts);
+        const urls = posts.map((post) => post.url);
+        setImageUrls(urls);
       } catch (error) {
         console.error(error);
-        setLoading(false);
       }
     };
 
     fetchData();
-  }, [pageId]);
-
-  const handleLoadMore = () => {
-    if (!loading && hasMore) {
-      setPageId((prevPageId) => prevPageId + 1);
-    }
-  };
+  }, []);
 
   return (
     <Wrapper>
       <Container className="mainboard">
-        <InfiniteScroll
-          key="infinite-scroll"
-          pageStart={1}
-          loadMore={handleLoadMore}
-          hasMore={hasMore}
-          loader={loading && <p>Loading...</p>}
-          useWindow={false}
-          initialLoad={false}
-        >
-          <Imageboard fetchedPosts={fetchedPosts} mainboard />
-        </InfiniteScroll>
+        <Imageboard fetchedPosts={fetchedPosts} mainboard imageUrls={imageUrls} />
       </Container>
     </Wrapper>
   );

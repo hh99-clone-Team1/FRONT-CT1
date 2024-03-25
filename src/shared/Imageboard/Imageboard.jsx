@@ -1,27 +1,30 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from 'react';
 import './Imageboard.css';
 import ImageCard from '../ImageCard/ImageCard';
 import optimizeImage from '../ImageCard/ImageOptimization';
 
-function Imageboard({ fetchedPosts, mainboard }) {
+function Imageboard({ fetchedPosts, mainboard, imageUrls }) {
   const [optimizedImages, setOptimizedImages] = useState([]);
 
   useEffect(() => {
     const optimizeImages = async () => {
-      const newOptimizedImages = new Map(optimizedImages);
-      await Promise.all(
-        fetchedPosts.map(async (post) => {
-          if (!optimizedImages.has(post.postId)) {
-            const optimizedData = await optimizeImage(post.url, post.title, post.nickname, post.postId, post.userId);
-            newOptimizedImages.set(post.postId, optimizedData);
-          }
+      const optimizedData = await Promise.all(
+        imageUrls.map(async (imageUrl, index) => {
+          const optimized = await optimizeImage(
+            imageUrl,
+            fetchedPosts[index].title,
+            fetchedPosts[index].nickname,
+            fetchedPosts[index].postId,
+            fetchedPosts[index].userId,
+          );
+          return optimized;
         }),
       );
-      setOptimizedImages(newOptimizedImages);
+      setOptimizedImages(optimizedData);
     };
+
     optimizeImages();
-  }, [fetchedPosts, optimizedImages]);
+  }, [imageUrls, fetchedPosts]);
 
   return (
     <>

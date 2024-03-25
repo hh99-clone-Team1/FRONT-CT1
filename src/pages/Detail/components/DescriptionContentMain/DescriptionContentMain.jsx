@@ -29,10 +29,10 @@ function DescriptionContentMain() {
       </ContentsBox>
       <ContentsBox />
       <ContentsBox className="detail__profile-box">
-        <Link to={`/mypage/${userId}`}>
+        <Link to={`/mypage/${userId}/${nickname}`}>
           <Profile num={userId % 10}>{nickname[0]}</Profile>
         </Link>
-        <Link className="content__user-name" to={`/mypage/${userId}`}>
+        <Link className="content__user-name" to={`/mypage/${userId}/${nickname}`}>
           {nickname}
         </Link>
       </ContentsBox>
