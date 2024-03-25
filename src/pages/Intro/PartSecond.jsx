@@ -39,21 +39,21 @@ const PartImgs = styled.div`
 `;
 
 const DivTop = styled.div`
+  display: flex;
+  justify-content: center;
   position: absolute;
   top: 300px;
   left: 300px;
+  z-index: 5;
   width: 300px;
   height: 60px;
-  background-color: white;
   padding: 15px;
   border: none;
   border-radius: 50px;
-  z-index: 5;
-  display: flex;
+  background-color: white;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  justify-content: center;
 `;
 
 const SearchComment = styled.div`
@@ -64,36 +64,36 @@ const ImgFirst = styled.img`
   position: absolute;
   top: 160px;
   left: 350px;
+  z-index: 4;
   width: 35vh;
   height: auto;
-  z-index: 4;
 `;
 
 const ImgSecond = styled.img`
   position: absolute;
   top: 80px;
   left: 540px;
+  z-index: 3;
   width: 22vh;
   height: auto;
-  z-index: 3;
 `;
 
 const ImgThird = styled.img`
   position: absolute;
   top: 230px;
   left: 210px;
+  z-index: 2;
   width: 23vh;
   height: auto;
-  z-index: 2;
 `;
 
 const ImgFourth = styled.img`
   position: absolute;
   top: 430px;
   left: 550px;
+  z-index: 1;
   width: 20vh;
   height: auto;
-  z-index: 1;
 `;
 
 const PartComment = styled.div`
@@ -101,25 +101,25 @@ const PartComment = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  width: 420px; /* 가로 길이를 400px로 고정 */
+  width: 420px;
   min-width: 420px;
-  height: 600px; /* 세로 길이를 600px로 고정 */
+  height: 600px;
   padding: 100px 270px 0px 270px;
+  font-size: 20px;
 `;
 
 const MainComment = styled.div`
-  font-size: 60px;
   margin: 10px 0;
   color: #c31952;
+  font-size: 60px;
   font-weight: bold;
   text-align: center;
 `;
 
 const SubComment = styled.div`
-  font-size: 24px;
   margin: 10px 0;
   color: #c31952;
+  font-size: 24px;
   text-align: center;
 `;
 

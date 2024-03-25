@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import palette from '../styles/palette';
 
 const Profile = styled.div`
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   border-radius: 25px;
@@ -10,9 +12,7 @@ const Profile = styled.div`
   color: #fff;
   font-size: 20px;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-decoration: none;
 `;
 
 export default Profile;

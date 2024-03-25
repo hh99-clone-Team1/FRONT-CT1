@@ -53,16 +53,16 @@ export default Header;
 const HeaderLayout = styled.div`
   display: flex;
   align-items: center;
-  padding: 4px 16px;
   width: 100%;
+  padding: 4px 16px;
 `;
 
 const NaviButton = styled(Button)`
   min-width: 60px;
+  padding: 10px 16px;
   background: #fff;
   color: #111;
   font-size: 16px;
-  padding: 10px 16px;
 
   &.header__navi-button--selected {
     color: #fff;
@@ -71,12 +71,12 @@ const NaviButton = styled(Button)`
 `;
 
 const IconStyles = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 25px;
   cursor: pointer;
 
   &:hover {

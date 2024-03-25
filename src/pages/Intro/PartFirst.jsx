@@ -40,51 +40,50 @@ const ImgsPart = styled.div`
   margin: 60px 0px 100px 0px;
 `;
 
-// Define a keyframe animation for the sequential appearance effect
 const fadeInAnimation = keyframes`
   from {
     opacity: 0;
-    transform: translateY(50px); /* 시작 위치 설정 */
+    transform: translateY(50px); // 시작 위치 설정
   }
   to {
     opacity: 1;
-    transform: translateY(0); /* 끝 위치 설정 */
+    transform: translateY(0); // 끝 위치 설정 
   }
 `;
 
 const AnimatedImgFirst = styled.img`
   margin: 10px;
   border-radius: 20px;
-  opacity: 0; /* 초기에 투명하게 설정 */
-  animation: ${fadeInAnimation} 1.5s ease 0s forwards; /* 애니메이션 적용 */
+  opacity: 0; // 초기에 투명하게 설정
+  animation: ${fadeInAnimation} 1.5s ease 0s forwards; // 0.3초 지연된 시작
 `;
 
 const AnimatedImgSecond = styled.img`
   margin: 10px;
   border-radius: 20px;
-  opacity: 0; /* 초기에 투명하게 설정 */
-  animation: ${fadeInAnimation} 1.5s ease 0.3s forwards; /* 0.3초 지연된 시작 */
+  opacity: 0;
+  animation: ${fadeInAnimation} 1.5s ease 0.3s forwards;
 `;
 
 const AnimatedImgThird = styled.img`
   margin: 10px;
   border-radius: 20px;
-  opacity: 0; /* 초기에 투명하게 설정 */
-  animation: ${fadeInAnimation} 1.5s ease 0.6s forwards; /* 0.6초 지연된 시작 */
+  opacity: 0;
+  animation: ${fadeInAnimation} 1.5s ease 0.6s forwards;
 `;
 
 const AnimatedImgFourth = styled.img`
   margin: 10px;
   border-radius: 20px;
-  opacity: 0; /* 초기에 투명하게 설정 */
-  animation: ${fadeInAnimation} 1.5s ease 0.9s forwards; /* 0.9초 지연된 시작 */
+  opacity: 0;
+  animation: ${fadeInAnimation} 1.5s ease 0.9s forwards;
 `;
 
 const AnimatedImgFifth = styled.img`
   margin: 10px;
   border-radius: 20px;
-  opacity: 0; /* 초기에 투명하게 설정 */
-  animation: ${fadeInAnimation} 1.5s ease 1.2s forwards; /* 1.2초 지연된 시작 */
+  opacity: 0;
+  animation: ${fadeInAnimation} 1.5s ease 1.2s forwards;
 `;
 
 export default PartFirst;

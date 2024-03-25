@@ -43,8 +43,8 @@ function SavedImgs() {
 const SavedIcons = styled.div`
   display: flex;
   justify-content: space-between;
-  text-align: center;
   width: 100%;
+  text-align: center;
 `;
 
 const Wrapper = styled.div`

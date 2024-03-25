@@ -18,9 +18,9 @@ const LabelInputLayout = styled.div`
   gap: 0px;
 
   p {
-    font-size: 12px;
     margin: 0;
     padding-bottom: 8px;
+    font-size: 12px;
     line-height: 1;
     cursor: pointer;
   }

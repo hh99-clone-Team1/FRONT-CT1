@@ -40,13 +40,13 @@ function ImageCard({ optimizedData, mainboard }) {
 export default ImageCard;
 
 const ElementWrapper = styled.div`
+  display: block;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
   top: 0px;
   left: 0px;
   margin-bottom: 20px;
-  position: relative;
-  display: block;
-  overflow: hidden;
-  flex-direction: column;
 `;
 
 const ImageWrapper = styled.div`
@@ -59,8 +59,8 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  width: 236px;
   position: relative;
+  width: 236px;
 
   img {
     display: flex;
@@ -95,10 +95,10 @@ const ImageContainer = styled.div`
 
 const ImageName = styled.div`
   position: relative;
+  margin-top: 4px;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: bold;
-  margin-top: 4px;
 `;
 
 const UserNameContainer = styled.div`

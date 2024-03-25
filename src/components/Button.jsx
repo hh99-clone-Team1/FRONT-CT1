@@ -3,15 +3,16 @@ import palette from '../styles/palette';
 
 const Button = styled.button`
   display: inline-block;
-  height: 52px;
   min-width: 60px;
-  border-radius: 35px;
+  height: 52px;
+  padding: 10px 20px;
   border: none;
-  font-weight: bold;
+  border-radius: 35px;
   font-size: 15px;
   text-align: center;
-  padding: 10px 20px;
+  font-weight: bold;
   cursor: pointer;
+
   ${(props) =>
     props.Red &&
     css`
@@ -21,18 +22,20 @@ const Button = styled.button`
         background-color: ${palette.red[1]};
       }
     `}
+
   ${(props) =>
     props.LightRed &&
     css`
       height: 43px;
-      padding: 10px 15px;
       margin-top: 10px;
+      padding: 10px 15px;
       background-color: ${palette.red[3]};
       color: white;
       &:hover {
         background-color: ${palette.red[1]};
       }
     `}
+
   ${(props) =>
     props.LightGray &&
     css`
@@ -44,6 +47,7 @@ const Button = styled.button`
         background-color: ${palette.gray[1]};
       }
     `}
+
   ${(props) =>
     props.Gray &&
     css`
@@ -54,6 +58,7 @@ const Button = styled.button`
         background-color: ${palette.gray[1]};
       }
     `}
+
   ${(props) =>
     props.GrayLong &&
     css`
@@ -65,6 +70,7 @@ const Button = styled.button`
         background-color: ${palette.gray[1]};
       }
     `}
+
   ${(props) =>
     props.Black &&
     css`
@@ -73,6 +79,7 @@ const Button = styled.button`
         background-color: black;
       }
     `}
+    
   ${(props) =>
     props.Blue &&
     css`

@@ -177,28 +177,28 @@ function LoginSignupModal({ closeModal, isLogin, setIsLogin }) {
 }
 
 const ModalWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const ModalContent = styled.form`
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
+  position: relative;
   width: 257px;
   height: 450px;
   padding: 86px;
-  background-color: white;
   border-radius: 30px;
+  background-color: white;
+  text-align: center;
   box-shadow: 0 0 5px;
 `;
 
@@ -208,9 +208,9 @@ const ModalCloseButton = styled.button`
   right: 20px;
   width: 30px;
   height: 20px;
-  color: black;
-  background-color: transparent;
   border: none;
+  background-color: transparent;
+  color: black;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -221,8 +221,8 @@ const IconWrapper = styled.div`
 `;
 
 const WelcomComment = styled.div`
-  font-size: 26px;
   padding-bottom: 10px;
+  font-size: 26px;
   font-weight: 600;
 `;
 
@@ -237,10 +237,10 @@ const IdeaComment = styled.div`
 `;
 
 const StrongComment = styled.div`
-  text-align: left;
   padding: 5px 0px 10px 0px;
   font-size: 12px;
   font-weight: bold;
+  text-align: left;
 `;
 
 const ServiceComment = styled.div`
@@ -257,9 +257,9 @@ const OrComment = styled.div`
 const FacebookLogo = styled.img`
   width: 15px;
   height: 15px;
-  border-radius: 100px;
-  border: 1px solid white;
   margin-right: 30px;
+  border: 1px solid white;
+  border-radius: 100px;
 `;
 
 const ChangeModalComment = styled.div`
