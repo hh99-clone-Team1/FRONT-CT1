@@ -34,16 +34,20 @@ function Imageboard({ mainboard }) {
 
   useEffect(() => {
     const optimizeImages = async () => {
-      const optimizedData = await Promise.all(
+      const newOptimizedImages = new Map(optimizedImages);
+      await Promise.all(
         fetchedPosts.map(async (post) => {
-          return optimizeImage(post.url, post.title, post.nickname, post.postId, post.userId);
+          if (!optimizedImages.has(post.postId)) {
+            const optimizedData = await optimizeImage(post.url, post.title, post.nickname, post.postId, post.userId);
+            newOptimizedImages.set(post.postId, optimizedData);
+          }
         }),
       );
-      setOptimizedImages((prevOptimizedImages) => [...prevOptimizedImages, ...optimizedData]);
+      setOptimizedImages(newOptimizedImages);
     };
 
     optimizeImages();
-  }, [fetchedPosts]);
+  }, [fetchedPosts, optimizedImages]);
 
   const handleLoadMore = () => {
     if (!loading && hasMore) {
@@ -55,6 +59,7 @@ function Imageboard({ mainboard }) {
     <Wrapper>
       <Container className="mainboard">
         <InfiniteScroll
+          key="infinite-scroll"
           pageStart={1}
           loadMore={handleLoadMore}
           hasMore={hasMore}
@@ -62,7 +67,7 @@ function Imageboard({ mainboard }) {
           useWindow={false}
           initialLoad={false}
         >
-          {optimizedImages.map((optimizedData) => (
+          {Array.from(optimizedImages.values()).map((optimizedData) => (
             <ImageCard optimizedData={optimizedData} mainboard={mainboard} key={optimizedData.postId} />
           ))}
         </InfiniteScroll>
