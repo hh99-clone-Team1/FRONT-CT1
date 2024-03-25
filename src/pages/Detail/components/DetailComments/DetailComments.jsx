@@ -37,12 +37,12 @@ function DetailComments() {
             <DetailEditComment selectedComment={content} commentId={commentId} handleCloseEditBox={handleCancelEdit} />
           ) : (
             <>
-              <Link to={`/mypage/${nickname}`}>
+              <Link to={`/mypage/${userId}`}>
                 <CommentProfile num={userId % 10}>{nickname[0]}</CommentProfile>
               </Link>
               <div>
                 <TextBox>
-                  <Link to={`/mypage/${nickname}`}>
+                  <Link to={`/mypage/${userId}`}>
                     <strong>{nickname}</strong>
                   </Link>
                   <p>{content}</p>

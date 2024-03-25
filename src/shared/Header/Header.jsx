@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Button from '../../components/Button';
 import IconBox from '../../components/IconBox';
 import palette from '../../styles/palette';
@@ -7,12 +8,16 @@ import { ChatIcon, DropdownIcon, LogoIcon, NoticeIcon } from '../../img/HeaderIc
 import SearchInput from './SearchInput';
 import Profile from '../../components/Profile';
 import { useUser } from '../../customHooks/useUserContext';
+import HeaderDropDown from './HeaderDropDown';
 
 function Header() {
   const navigation = useNavigate();
   const { pathname } = useLocation();
   const isAddPage = pathname === '/addImage';
   const { user } = useUser();
+  const [isOnToggle, setIsOnToggle] = useState();
+
+  const handleClickToggle = () => setIsOnToggle(!isOnToggle);
 
   return (
     <HeaderLayout>
@@ -32,12 +37,13 @@ function Header() {
       <IconBox>
         <ChatIcon color={palette.gray[3]} />
       </IconBox>
-      <IconBox>
+      <IconBox onClick={() => navigation(`/mypage/${user.userId}`)}>
         <HeaderProfile num={user.userId % 10}>{user.nickname[0]}</HeaderProfile>
       </IconBox>
-      <IconStyles>
+      <IconStyles onClick={handleClickToggle}>
         <DropdownIcon color={palette.gray[3]} />
       </IconStyles>
+      {isOnToggle && <HeaderDropDown />}
     </HeaderLayout>
   );
 }

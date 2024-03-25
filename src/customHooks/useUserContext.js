@@ -8,7 +8,7 @@ export function UserProvider({ children }) {
   const email = localStorage.getItem('email');
   const token = localStorage.getItem('accessToken').split(' ')[1];
   useEffect(() => {
-    setUser({ nickname: email.split('@')[0], userId: jwtDecode(token).userId });
+    setUser({ nickname: email.split('@')[0], userId: jwtDecode(token).userId, email });
   }, [email]);
 
   return (
