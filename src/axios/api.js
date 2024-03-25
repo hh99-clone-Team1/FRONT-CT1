@@ -6,7 +6,7 @@ const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
-// // 토큰이 필요한 경우
+// 토큰이 필요한 경우
 const authInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 });

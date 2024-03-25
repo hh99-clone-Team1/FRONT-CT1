@@ -14,7 +14,7 @@ function Intro() {
       e.preventDefault();
       const { deltaY } = e;
       const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
-      const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+      const pageHeight = window.innerHeight;
       const currentPage = Math.floor(scrollTop / pageHeight) + 1; // 현재 페이지 계산
 
       if (deltaY > 0) {
@@ -66,8 +66,8 @@ function Intro() {
 }
 
 const IntroLayout = styled.div`
-  height: 100vh;
   overflow-y: auto;
+  height: 100vh;
 
   /* 화면에서 스크롤바 안보이게 */
   &::-webkit-scrollbar {

@@ -29,25 +29,25 @@ const PartComment = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  width: 420px; /* 가로 길이를 400px로 고정 */
+  width: 420px;
   min-width: 420px;
-  height: 600px; /* 세로 길이를 600px로 고정 */
+  height: 600px;
   padding: 100px 270px 0px 270px;
+  font-size: 20px;
 `;
 
 const MainComment = styled.div`
-  font-size: 60px;
   margin: 10px 0;
   color: #c32f00;
+  font-size: 60px;
   font-weight: bold;
   text-align: center;
 `;
 
 const SubComment = styled.div`
-  font-size: 24px;
   margin: 10px 0;
   color: #c32f00;
+  font-size: 24px;
   text-align: center;
 `;
 
