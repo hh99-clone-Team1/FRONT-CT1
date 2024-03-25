@@ -1,15 +1,31 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import Button from '../../../components/Button';
 import palette from '../../../styles/palette';
 import MadenImgs from './MadenImgs';
 import SavedImgs from './SavedImgs';
+import getUserImgs from '../../../axios/userPageAxios';
+import useGetPins from '../../../customHooks/useGetPins';
 
 function MyPageContents() {
-  const username = localStorage.getItem('username');
-  const userEmail = localStorage.getItem('email');
-  const usernameFirstChar = userEmail.charAt(0).toUpperCase();
+  const { userId, nickname } = useParams();
   const [selectedButton, setSelectedButton] = useState('MadenButton');
+
+  // eslint-disable-next-line no-unused-vars
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['userImgs', userId],
+    queryFn: async () => {
+      // eslint-disable-next-line no-shadow
+      const data = await getUserImgs(userId);
+      console.log(data);
+      return data;
+    },
+  });
+
+  const savedImgs = useGetPins(userId);
+  console.log('savedImgs', savedImgs);
 
   const handleButtonClick = (button) => {
     setSelectedButton(button);
@@ -17,9 +33,9 @@ function MyPageContents() {
 
   return (
     <>
-      <MyIcon>{usernameFirstChar}</MyIcon>
-      <MyName>{username}</MyName>
-      <MyEmail>{userEmail}</MyEmail>
+      <MyIcon>{nickname[0].toUpperCase()}</MyIcon>
+      <MyName>{nickname}</MyName>
+      <MyEmail>{nickname}@naver.com</MyEmail>
       <Following>팔로잉 132명</Following>
       <ButtonsBox>
         <Button Gray>공유</Button>

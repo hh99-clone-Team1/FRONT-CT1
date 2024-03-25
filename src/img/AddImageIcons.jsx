@@ -22,4 +22,12 @@ function UploadIcon({ color }) {
   );
 }
 
-export { SideOpenIcon, PlusIcon, UploadIcon };
+function EditIcon({ color }) {
+  return (
+    <svg height="20" width="20" viewBox="0 0 24 24" aria-hidden="true" role="img" fill={color}>
+      <path d="M17.45 1.95a3.25 3.25 0 1 1 4.6 4.6l-2.3 2.3-4.6-4.6zM2.5 16.9 13.4 6.02l4.6 4.6L7.08 21.5 1 23z" />
+    </svg>
+  );
+}
+
+export { SideOpenIcon, PlusIcon, UploadIcon, EditIcon };

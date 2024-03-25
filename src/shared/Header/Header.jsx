@@ -37,7 +37,7 @@ function Header() {
       <IconBox>
         <ChatIcon color={palette.gray[3]} />
       </IconBox>
-      <IconBox onClick={() => navigation(`/mypage/${user.userId}`)}>
+      <IconBox onClick={() => navigation(`/mypage/${user.userId}/${user.nickname}`)}>
         <HeaderProfile num={user.userId % 10}>{user.nickname[0]}</HeaderProfile>
       </IconBox>
       <IconStyles onClick={handleClickToggle}>

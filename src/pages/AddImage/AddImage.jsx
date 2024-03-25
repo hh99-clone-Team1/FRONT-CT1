@@ -1,16 +1,87 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import palette from '../../styles/palette';
 import IconBox from '../../components/IconBox';
 import LabelInput from '../../components/LabelInput';
 import Button from '../../components/Button';
-import { SideOpenIcon, PlusIcon, UploadIcon } from '../../img/AddImageIcons';
+import { SideOpenIcon, PlusIcon, UploadIcon, EditIcon } from '../../img/AddImageIcons';
+import { postImage, postPost } from '../../axios/imagesAxios';
 
 function AddImage() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [postContent, setPostContent] = useState({
+    title: '',
+    content: '',
+    link: '',
+    imageId: '',
+  });
 
-  const handleFileSelect = (e) => {
-    setSelectedFile(e.target.files[0]);
+  const navigate = useNavigate();
+
+  const handleFileSelect = async (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      try {
+        const formData = new FormData();
+        formData.append('image', file);
+        const imageUrl = await postImage(file);
+        setSelectedFile(file);
+        setPostContent((prevFormData) => ({
+          ...prevFormData,
+          imageId: imageUrl,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      if (!postContent.imageId) {
+        alert('이미지를 등록해주세요.');
+        return;
+      }
+
+      const postData = {
+        title: postContent.title || ' ',
+        content: postContent.content || ' ',
+        link: postContent.link || ' ',
+        imageId: postContent.imageId,
+      };
+
+      const response = await postPost(postData);
+      console.log(response);
+      navigate('/main');
+    } catch (error) {
+      console.log(postContent);
+      console.log(error);
+    }
+  };
+
+  const handleTitleChange = (e) => {
+    const { value } = e.target;
+    setPostContent((prevFormData) => ({
+      ...prevFormData,
+      title: value,
+    }));
+  };
+
+  const handleContentChange = (e) => {
+    const { value } = e.target;
+    setPostContent((prevFormData) => ({
+      ...prevFormData,
+      content: value,
+    }));
+  };
+
+  const handleLinkChange = (e) => {
+    const { value } = e.target;
+    setPostContent((prevFormData) => ({
+      ...prevFormData,
+      link: value,
+    }));
   };
 
   return (
@@ -31,33 +102,81 @@ function AddImage() {
       <AddContainer>
         <TopBar>
           <TopTitle>핀 만들기</TopTitle>
+          {selectedFile && (
+            <ButtonWrapper>
+              <Button Red onClick={handleSubmit}>
+                게시
+              </Button>
+            </ButtonWrapper>
+          )}
         </TopBar>
         <ImageAddContainer>
           <ImageAddSide>
-            <ImageAddBox onClick={handleFileSelect}>
-              <input type="file" id="fileInput" onChange={handleFileSelect} style={{ display: 'none' }} />
-              {selectedFile && <ImageAddBox src={URL.createObjectURL(selectedFile)} />}
-              <IconBox>
-                <UploadIcon color={palette.black[0]} />
-              </IconBox>
-              <BoxText>파일을 선택하거나 여기로 끌어다 놓으세요.</BoxText>
-              <BoxNotice>Pinterest는 20MB 미만의 고화질 .jpg 파일 사용을 권장합니다.</BoxNotice>
+            <ImageAddBox>
+              <input
+                type="file"
+                id="fileInput"
+                onChange={handleFileSelect}
+                style={{
+                  position: 'absolute',
+                  width: 370,
+                  height: 450,
+                  overflow: 'hidden',
+                  opacity: 0,
+                  cursor: 'pointer',
+                }}
+              />
+              {selectedFile && (
+                <ImageAddWrapper>
+                  <EditButton onChange={handleFileSelect}>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      onChange={handleFileSelect}
+                      style={{
+                        position: 'absolute',
+                        width: 370,
+                        height: 450,
+                        overflow: 'hidden',
+                        opacity: 0,
+                        cursor: 'pointer',
+                      }}
+                    />
+                    <EditIcon color={palette.black[0]} />
+                  </EditButton>
+                  <img src={URL.createObjectURL(selectedFile)} alt="Uploaded" />
+                </ImageAddWrapper>
+              )}
+              {!selectedFile && (
+                <>
+                  <IconBox>
+                    <UploadIcon color={palette.black[0]} />
+                  </IconBox>
+                  <BoxText>파일을 선택하거나 여기로 끌어다 놓으세요.</BoxText>
+                  <BoxNotice>Pinterest는 20MB 미만의 고화질 .jpg 파일 사용을 권장합니다.</BoxNotice>
+                </>
+              )}
             </ImageAddBox>
             <DummyBox Long />
             <Button GrayLong>URL에서 저장</Button>
           </ImageAddSide>
-          <ImageInputSide>
+          <ImageInputSide selectedFile={selectedFile}>
             <InputWrapper>
               <InputName>제목</InputName>
-              <LabelInput type="title" placeholder="제목 추가" />
+              <LabelInput type="title" placeholder="제목 추가" value={postContent.title} onChange={handleTitleChange} />
             </InputWrapper>
             <InputWrapper>
               <InputName>설명</InputName>
-              <InputHigh type="content" placeholder="자세한 설명을 추가하세요" />
+              <InputHigh
+                type="content"
+                placeholder="자세한 설명을 추가하세요"
+                value={postContent.content}
+                onChange={handleContentChange}
+              />
             </InputWrapper>
             <InputWrapper>
               <InputName>링크</InputName>
-              <LabelInput type="link" placeholder="링크 추가" />
+              <LabelInput type="link" placeholder="링크 추가" value={postContent.link} onChange={handleLinkChange} />
             </InputWrapper>
             <InputNotice>
               불법 촬영 콘텐츠 등을 게시하는 경우 Pinterest는 한국 전기통신사업법 22-5조에 따라 해당 콘텐츠의 액세스를
@@ -107,6 +226,11 @@ const TopBar = styled.div`
   border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-right: 15px;
 `;
 
 const TopTitle = styled.div`
@@ -144,6 +268,8 @@ const ImageInputSide = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   margin-left: 50px;
+  opacity: ${(props) => (props.selectedFile ? '1' : '0.5')};
+  pointer-events: ${(props) => (props.selectedFile ? 'auto' : 'none')};
 `;
 
 const InputWrapper = styled.div`
@@ -165,12 +291,10 @@ const InputNotice = styled.div`
   margin-top: 10px;
 `;
 
-const ImageAddBox = styled.div`
+const ImageAddBox = styled.button`
   width: 370px;
   height: 450px;
-  border: 1px dashed ${palette.gray[6]};
-  border-width: 1px;
-  border-width: 2px;
+  border: 2px dashed ${palette.gray[6]};
   border-radius: 30px;
   background-color: ${palette.gray[0]};
   display: flex;
@@ -182,6 +306,7 @@ const ImageAddBox = styled.div`
 `;
 
 const BoxText = styled.div`
+  font-size: 16px;
   width: 220px;
   display: flex;
   align-items: center;
@@ -237,5 +362,37 @@ const InputHigh = styled.textarea`
   &:focus {
     box-shadow: 0 0 0 4px rgba(0, 132, 255, 0.5);
     outline: 0;
+  }
+`;
+
+const ImageAddWrapper = styled.div`
+  position: absolute;
+  width: 370px;
+  height: 450px;
+  overflow: hidden;
+  border-radius: 30px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const EditButton = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 43px;
+  height: 43px;
+  border-radius: 25px;
+  border: none;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: ${palette.gray[0]};
   }
 `;

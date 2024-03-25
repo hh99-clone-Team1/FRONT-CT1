@@ -12,7 +12,7 @@ function HeaderDropDown() {
     <DropDownBox>
       <DropDown>
         <p className="dropdown__section-title">현재 로그인 계정</p>
-        <ProfileBox onClick={() => navigation(`/mypage/${user.userId}`)}>
+        <ProfileBox onClick={() => navigation(`/mypage/${user.userId}/${user.nickname}`)}>
           <DropdownProfile>s</DropdownProfile>
           <ProfileTextBox>
             <h4>{user.nickname}</h4>

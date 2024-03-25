@@ -15,7 +15,7 @@ const Button = styled.button`
   ${(props) =>
     props.Red &&
     css`
-      background-color: ${palette.red[0]};
+      background-color: ${palette.red[3]};
       color: white;
       &:hover {
         background-color: ${palette.red[1]};
