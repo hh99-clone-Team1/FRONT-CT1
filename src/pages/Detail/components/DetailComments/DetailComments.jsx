@@ -19,8 +19,6 @@ function DetailComments() {
     enabled: !!postId,
   });
 
-  console.log('choi comments', comments);
-
   const handleEditComment = (commentId) => {
     setEditComment(commentId);
   };
